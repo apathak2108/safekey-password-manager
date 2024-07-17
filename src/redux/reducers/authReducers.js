@@ -12,6 +12,6 @@ export const authReducer = (state = initialState, action) => {
         phoneNumber: action?.payload,
       };
     default:
-        return state;
+      return state;
   }
 };

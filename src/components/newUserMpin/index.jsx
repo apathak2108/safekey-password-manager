@@ -1,0 +1,86 @@
+import React, { useRef, useState } from "react";
+import {
+  StyledDigitInput,
+  StyledInputCard,
+  StyledMPINInputContainer,
+  StyledTextContainer,
+} from "../existingUserMpin/existingUserMpin.styled";
+import STRINGS from "../../constants/strings";
+import {
+  StyledContinueButton,
+  StyledErrorMessage,
+} from "../phoneAuth/phoneAuth.styled";
+import { handleCreateMPINChange, handleReEnterMPINChange } from "../../utils";
+
+const NewUserMPINComponent = () => {
+  const [createMPINdigits, setCreateMPINDigits] = useState(["", "", "", ""]);
+  const [reEnterMPINdigits, setReEnterMPINDigits] = useState(["", "", "", ""]);
+  const [reEnterMPINError, setReEnterMPINError] = useState("");
+  const [createMPINError, setCreateMPINError] = useState("");
+  const [isContinueDisabled, setIsContinueDisabled] = useState(false);
+
+  const createInputRefs = useRef([]);
+  const reEnterInputRefs = useRef([]);
+
+  const handleCreateInputChange = (event, index) => {
+    handleCreateMPINChange(
+      event,
+      index,
+      createMPINdigits,
+      setCreateMPINDigits,
+      setCreateMPINError,
+      createInputRefs,
+      STRINGS
+    );
+  };
+
+  const handleReEnterInputChange = (event, index) => {
+    handleReEnterMPINChange(
+      event,
+      index,
+      reEnterMPINdigits,
+      setReEnterMPINDigits,
+      createMPINdigits,
+      setReEnterMPINError,
+      reEnterInputRefs
+    );
+  };
+  return (
+    <StyledInputCard>
+      <StyledTextContainer>{STRINGS.CREATE_MPIN}</StyledTextContainer>
+      <StyledMPINInputContainer>
+        {[0, 1, 2, 3].map((key, index) => (
+          <StyledDigitInput
+            key={index}
+            type={STRINGS.PASSWORD_INPUT_TYPE}
+            maxLength={STRINGS.MPIN_MAXLEN}
+            onChange={(event) => handleCreateInputChange(event, index)}
+            ref={(el) => (createInputRefs.current[index] = el)}
+          />
+        ))}
+      </StyledMPINInputContainer>
+      {createMPINError && (
+        <StyledErrorMessage>{createMPINError}</StyledErrorMessage>
+      )}
+      <hr />
+      <StyledTextContainer>{STRINGS.RE_ENTER_MPIN}</StyledTextContainer>
+      <StyledMPINInputContainer>
+        {[0, 1, 2, 3].map((key, index) => (
+          <StyledDigitInput
+            key={index}
+            type={STRINGS.PASSWORD_INPUT_TYPE}
+            maxLength="1"
+            onChange={(event) => handleReEnterInputChange(event, index)}
+            ref={(el) => (reEnterInputRefs.current[index] = el)}
+          />
+        ))}
+      </StyledMPINInputContainer>
+      {reEnterMPINError && (
+        <StyledErrorMessage>{reEnterMPINError}</StyledErrorMessage>
+      )}
+      <StyledContinueButton>{STRINGS.CONTINUE}</StyledContinueButton>
+    </StyledInputCard>
+  );
+};
+
+export default NewUserMPINComponent;
