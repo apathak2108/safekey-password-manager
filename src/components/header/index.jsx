@@ -5,8 +5,9 @@ import {
   StyledHeaderLogo,
   StyledHeaderLogoContainer,
 } from "./header.styled";
-import HeaderLogo from "../../assets/header/safekey-logo-white.png";
+import HeaderLogo from "../../assets/header/safekeyLogoWhite.png";
 import Button from "../button";
+import STRINGS from "../../constants/strings";
 
 const Header = ({ flag = true }) => {
   return (
@@ -16,7 +17,7 @@ const Header = ({ flag = true }) => {
       </StyledHeaderLogoContainer>
       {flag && (
         <StyledHeaderAuthContainer>
-          <Button name="Sign Out" />
+          <Button name={STRINGS.SIGN_OUT} />
         </StyledHeaderAuthContainer>
       )}
     </StyledHeaderContainer>
