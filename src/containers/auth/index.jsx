@@ -10,8 +10,8 @@ const AuthContainer = () => {
     <>
       <Header flag={false} />
       <StyledAuthLayout>
-        {/* <PhoneAuthComponent /> */}
-        <ExistingUserMPINComponent />
+        <PhoneAuthComponent />
+        {/* <ExistingUserMPINComponent /> */}
         {/* <NewUserMPINComponent /> */}
       </StyledAuthLayout>
     </>
