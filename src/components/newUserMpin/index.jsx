@@ -11,13 +11,24 @@ import {
   StyledErrorMessage,
 } from "../phoneAuth/phoneAuth.styled";
 import { handleCreateMPINChange, handleReEnterMPINChange } from "../../utils";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createMpinPost,
+  setCreatedMPIN,
+  setIsMpinCreated,
+} from "../../redux/actions/authActions";
+import { useNavigate } from "react-router-dom";
 
 const NewUserMPINComponent = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [createMPINdigits, setCreateMPINDigits] = useState(["", "", "", ""]);
   const [reEnterMPINdigits, setReEnterMPINDigits] = useState(["", "", "", ""]);
   const [reEnterMPINError, setReEnterMPINError] = useState("");
   const [createMPINError, setCreateMPINError] = useState("");
-  const [isContinueDisabled, setIsContinueDisabled] = useState(false);
+  const [isContinueDisabled, setIsContinueDisabled] = useState(true);
+  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  // const createdMpin = useSelector((state) => state?.auth?.createdMpin);
 
   const createInputRefs = useRef([]);
   const reEnterInputRefs = useRef([]);
@@ -42,9 +53,19 @@ const NewUserMPINComponent = () => {
       setReEnterMPINDigits,
       createMPINdigits,
       setReEnterMPINError,
-      reEnterInputRefs
+      reEnterInputRefs,
+      setIsContinueDisabled
     );
   };
+
+  const handleNewMpinCreated = () => {
+    const createdMpin = createMPINdigits.join("");
+    dispatch(setIsMpinCreated());
+    dispatch(setCreatedMPIN(createMPINdigits.join("")));
+    dispatch(createMpinPost(createdMpin, phoneNumber));
+    navigate("/");
+  };
+
   return (
     <StyledInputCard>
       <StyledTextContainer>{STRINGS.CREATE_MPIN}</StyledTextContainer>
@@ -65,7 +86,7 @@ const NewUserMPINComponent = () => {
       <hr />
       <StyledTextContainer>{STRINGS.RE_ENTER_MPIN}</StyledTextContainer>
       <StyledMPINInputContainer>
-        {[0, 1, 2, 3].map((key, index) => (
+        {[0, 1, 2, 3].map((_, index) => (
           <StyledDigitInput
             key={index}
             type={STRINGS.PASSWORD_INPUT_TYPE}
@@ -78,7 +99,12 @@ const NewUserMPINComponent = () => {
       {reEnterMPINError && (
         <StyledErrorMessage>{reEnterMPINError}</StyledErrorMessage>
       )}
-      <StyledContinueButton>{STRINGS.CONTINUE}</StyledContinueButton>
+      <StyledContinueButton
+        disabled={isContinueDisabled}
+        onClick={handleNewMpinCreated}
+      >
+        {STRINGS.CONTINUE}
+      </StyledContinueButton>
     </StyledInputCard>
   );
 };

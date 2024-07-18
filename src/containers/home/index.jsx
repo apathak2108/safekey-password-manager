@@ -14,18 +14,24 @@ import {
 import AddPasswordModal from "../../components/addModal";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsPasswordModalOpen } from "../../redux/actions/homeActions";
+import {
+  setIsMpinModalOpen,
+  setIsPasswordModalOpen,
+} from "../../redux/actions/homeActions";
+import ExistingUserMPINComponent from "../../components/existingUserMpin";
+import EditAndDeleteModal from "../../components/editModal";
 
 const HomeContainer = () => {
   const dispatch = useDispatch();
-
+  const createdMpin = useSelector((state) => state?.auth?.createdMpin);
   const isModal = useSelector((state) => state?.home?.isPasswordModal);
-
+  const isMpinModal = useSelector((state) => state?.home?.isMpinModal);
+console.log(createdMpin, "createdMpin")
   return (
     <>
       <Header />
       <Layout>
-        {!isModal && (
+        {!isModal && !isMpinModal && (
           <StyledPasswordsMainContainer>
             <PasswordContainerHeader>
               <StyledHeaderText>{STRINGS.PASSWORDS}</StyledHeaderText>
@@ -40,7 +46,10 @@ const HomeContainer = () => {
             </StyledDescriptionContainer>
             <StyledPasswordCardsContainer>
               {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, index) => (
-                <StyledPasswordCard key={index}>
+                <StyledPasswordCard
+                  key={index}
+                  onClick={() => dispatch(setIsMpinModalOpen())}
+                >
                   Dummy Title
                   <StyledArrowIcon />
                 </StyledPasswordCard>
@@ -49,6 +58,8 @@ const HomeContainer = () => {
           </StyledPasswordsMainContainer>
         )}
         {isModal && <AddPasswordModal />}
+        {isMpinModal && <ExistingUserMPINComponent />}
+        {/* <EditAndDeleteModal /> */}
       </Layout>
     </>
   );

@@ -23,8 +23,8 @@ export const StyledTextContainer = styled.section`
   font-family: system-ui;
 `;
 
-
 export const StyledInputCard = styled.main`
+  height: fit-content;
   display: flex;
   flex-flow: column;
   background-color: #eaeded;

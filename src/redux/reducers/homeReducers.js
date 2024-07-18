@@ -1,7 +1,8 @@
-import { IS_PASSWORD_MODAL_OPEN } from "../actionTypes";
+import { IS_MPIN_MODAL_OPEN, IS_PASSWORD_MODAL_OPEN } from "../actionTypes";
 
 const initialState = {
   isPasswordModal: false,
+  isMpinModal: false,
 };
 
 export const homeReducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ export const homeReducer = (state = initialState, action) => {
       return {
         ...state,
         isPasswordModal: !state?.isPasswordModal,
+      };
+    case IS_MPIN_MODAL_OPEN:
+      return {
+        ...state,
+        isMpinModal: !state?.isMpinModal,
       };
     default:
       return state;

@@ -12,14 +12,20 @@ import {
 } from "./phoneAuth.styled";
 import { useDispatch, useSelector } from "react-redux";
 import STRINGS from "../../constants/strings";
-import PATHS from "../../constants/paths";
-import { setPhoneNumber } from "../../redux/actions/authActions";
+import { INDIA_ICON_PATH } from "../../constants/paths";
+import {
+  checkPhoneNumber,
+  setIsAuth,
+  setPhoneNumber,
+} from "../../redux/actions/authActions";
 import { handlePhoneInputChange } from "../../utils";
+import { ClipLoader } from "react-spinners";
 
 const PhoneAuthComponent = () => {
   const dispatch = useDispatch();
   const [phoneError, setPhoneError] = useState("");
   const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  const loading = useSelector((state) => state?.auth?.loading);
 
   const handleInputChange = (event) => {
     handlePhoneInputChange(
@@ -29,6 +35,10 @@ const PhoneAuthComponent = () => {
       setPhoneError,
       STRINGS
     );
+  };
+  const handlePhoneNumberContinue = () => {
+    dispatch(checkPhoneNumber(phoneNumber));
+    dispatch(setIsAuth());
   };
 
   return (
@@ -46,8 +56,10 @@ const PhoneAuthComponent = () => {
           maxLength={STRINGS.PHONE_MAXLEN}
         />
         {phoneError && <StyledErrorMessage>{phoneError}</StyledErrorMessage>}
-        <StyledIndiaIcon src={PATHS.INDIA_ICON} alt="india-icon" />
-        <StyledContinueButton>{STRINGS.CONTINUE}</StyledContinueButton>
+        <StyledIndiaIcon src={INDIA_ICON_PATH} alt="india-icon" />
+        <StyledContinueButton onClick={handlePhoneNumberContinue}>
+          {loading ? <ClipLoader color="white" size={30} /> : STRINGS.CONTINUE}
+        </StyledContinueButton>
       </StyledInputContainer>
     </StyledMobileInputContainer>
   );

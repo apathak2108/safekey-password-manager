@@ -74,7 +74,8 @@ export const handleReEnterMPINChange = (
   setReEnterMPINDigits,
   createMPINdigits,
   setReEnterMPINError,
-  reEnterInputRefs
+  reEnterInputRefs,
+  setIsContinueDisabled
 ) => {
   const reEnteredDigit = event.target.value;
   const newMPINdigits = [...reEnterMPINdigits];
@@ -86,7 +87,9 @@ export const handleReEnterMPINChange = (
   }
   if (newMPINdigits.join("") !== createMPINdigits.join("")) {
     setReEnterMPINError("MPINs do not match !");
+    setIsContinueDisabled(true);
   } else {
     setReEnterMPINError("");
+    setIsContinueDisabled(false);
   }
 };

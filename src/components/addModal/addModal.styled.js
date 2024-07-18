@@ -10,6 +10,7 @@ export const StyledAddModalContainer = styled.div`
   gap: 24px;
   border-radius: 6px;
   background-color: #fff;
+  box-shadow: 0px 1px 4px 1px rgba(01, 10, 10, 0.3);
 `;
 
 export const StyledAddModalInputContainer = styled.div`

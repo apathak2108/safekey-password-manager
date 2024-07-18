@@ -73,6 +73,9 @@ export const StyledContinueButton = styled.button`
   &:hover {
     background-color: #141b23;
   }
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 export const StyledErrorMessage = styled.p`
