@@ -5,6 +5,7 @@ const STRINGS = {
   MAXLEN_ERROR_MESSAGE: "Phone Number cannot be more than 10 digits",
   PHONE_PLACEHOLDER: "Phone Number",
   PHONE_INPUT_TYPE: "number",
+  BUTTON_INPUT_TYPE: "button",
   TEXT_INPUT_TYPE: "text",
   PASSWORD_INPUT_TYPE: "password",
   PHONE_MAXLEN: "10",

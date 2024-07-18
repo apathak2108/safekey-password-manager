@@ -9,6 +9,7 @@ export const StyledPasswordsMainContainer = styled.main`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 12px;
+  margin-top: 260px;
 `;
 
 export const PasswordContainerHeader = styled.header`

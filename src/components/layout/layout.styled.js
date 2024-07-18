@@ -6,6 +6,7 @@ export const StyledLayout = styled.div`
   background-color: #eaeded;
   display: flex;
   justify-content: center;
+  align-items: center;
   position: relative;
   top: 64px;
   overflow-y: scroll;

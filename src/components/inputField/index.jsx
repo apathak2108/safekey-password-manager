@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { StyledInputField } from "./inputField.styled";
+import {
+  StyledEyeButton,
+  StyledInputContainer,
+  StyledInputField,
+} from "./inputField.styled";
+import STRINGS from "../../constants/strings";
 
 const InputField = ({ value, type, placeholder, onChange, maxLength }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,39 +14,25 @@ const InputField = ({ value, type, placeholder, onChange, maxLength }) => {
     setShowPassword(!showPassword);
   };
 
-  const handleChange = (e) => {
-    const { value } = e.target;
-    onChange(value);
-  };
-
   return (
-    <div style={{ position: "relative" }}>
+    <StyledInputContainer>
       <StyledInputField
-        type={showPassword ? "text" : type}
+        type={showPassword ? `${STRINGS.TEXT_INPUT_TYPE}` : type}
         value={value}
         placeholder={placeholder}
-        onChange={handleChange}
+        onChange={onChange}
         maxLength={maxLength}
         required
       />
-      {type === "password" && (
-        <button
-          type="button"
+      {type === `${STRINGS.PASSWORD_INPUT_TYPE}` && (
+        <StyledEyeButton
+          type={STRINGS.BUTTON_INPUT_TYPE}
           onClick={togglePasswordVisibility}
-          style={{
-            position: "absolute",
-            right: "0",
-            bottom: "0",
-            transform: "translateY(-50%)",
-            backgroundColor: "transparent",
-            border: "none",
-            cursor: "pointer",
-          }}
         >
           {showPassword ? <FaEyeSlash /> : <FaEye />}
-        </button>
+        </StyledEyeButton>
       )}
-    </div>
+    </StyledInputContainer>
   );
 };
 

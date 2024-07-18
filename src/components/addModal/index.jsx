@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyledAddModalButton,
   StyledAddModalButtonsContainer,
@@ -15,17 +15,36 @@ import STRINGS from "../../constants/strings";
 
 const AddPasswordModal = () => {
   const dispatch = useDispatch();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleUsernameChange = (event) => {
+    const value = event?.target?.value;
+    setUsername(value);
+  };
+  const handlePasswordChange = (event) => {
+    const value = event.target.value;
+    setPassword(value);
+  };
   return (
     <StyledModalLayout>
       <StyledAddModalContainer>
         <StyledHeaderText>{STRINGS.ADD_NEW_PASSWORD}</StyledHeaderText>
         <StyledAddModalInputContainer>
           <span>{STRINGS.PASSWORD_TITLE}</span>
-          <InputField type={STRINGS.TEXT_INPUT_TYPE} />
+          <InputField
+            type={STRINGS.TEXT_INPUT_TYPE}
+            onChange={(e) => handleUsernameChange(e)}
+            value={username}
+          />
         </StyledAddModalInputContainer>
         <StyledAddModalInputContainer>
           <span>{STRINGS.PASSWORD}</span>
-          <InputField type={STRINGS.PASSWORD_INPUT_TYPE} />
+          <InputField
+            type={STRINGS.PASSWORD_INPUT_TYPE}
+            onChange={(e) => handlePasswordChange(e)}
+            value={password}
+          />
         </StyledAddModalInputContainer>
         <span>{STRINGS.ADD_PASSWORD_DESCRIPTION_TEXT}</span>
         <StyledAddModalButtonsContainer>
