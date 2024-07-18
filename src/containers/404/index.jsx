@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledErrorPageLayout } from "./error404.styled";
+import { StyledErrorPageLayout } from "./404.styled";
 import Error404Image from "../../assets/404/error404Image.png";
 
 const Error404Container = () => {

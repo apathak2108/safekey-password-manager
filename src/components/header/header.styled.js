@@ -7,6 +7,7 @@ export const StyledHeaderContainer = styled.header`
   position: fixed;
   top: 0;
   display: flex;
+  z-index: 1;
 `;
 
 export const StyledHeaderLogoContainer = styled.section`
