@@ -23,10 +23,9 @@ import EditAndDeleteModal from "../../components/editModal";
 
 const HomeContainer = () => {
   const dispatch = useDispatch();
-  const createdMpin = useSelector((state) => state?.auth?.createdMpin);
   const isModal = useSelector((state) => state?.home?.isPasswordModal);
   const isMpinModal = useSelector((state) => state?.home?.isMpinModal);
-console.log(createdMpin, "createdMpin")
+
   return (
     <>
       <Header />
@@ -45,7 +44,7 @@ console.log(createdMpin, "createdMpin")
               {STRINGS.HOME_DESCRIPTION_TEXT}
             </StyledDescriptionContainer>
             <StyledPasswordCardsContainer>
-              {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((_, index) => (
+              {[1, 1, 1, 1, 1, 1, 1].map((_, index) => (
                 <StyledPasswordCard
                   key={index}
                   onClick={() => dispatch(setIsMpinModalOpen())}

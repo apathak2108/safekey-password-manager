@@ -1,3 +1,4 @@
+import { setISLoggedIn } from "../actions/authActions";
 import {
   SET_PHONE_NUMBER,
   CHECK_PHONE_NUMBER_REQUEST,
@@ -9,6 +10,10 @@ import {
   CREATE_MPIN_POST_REQUEST,
   CREATE_MPIN_POST_FAILURE,
   CREATE_MPIN_POST_SUCCESS,
+  IS_MPIN_CORRECT_REQUEST,
+  IS_MPIN_CORRECT_SUCCESS,
+  IS_MPIN_CORRECT_FAILURE,
+  SET_IS_LOGGED_IN,
 } from "../actionTypes";
 
 const initialState = {
@@ -20,6 +25,8 @@ const initialState = {
   isMpinCreated: false,
   createdMpin: "",
   postResponseData: null,
+  isMpinCorrect: false,
+  isLoggedIn: false,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -44,7 +51,7 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action?.error,
+        error: action.error,
         userExist: false,
       };
     case SET_AUTH_STATUS:
@@ -77,7 +84,29 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.error,
+      };
+    case IS_MPIN_CORRECT_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case IS_MPIN_CORRECT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isMpinCorrect: action.payload?.mpin,
+      };
+    case IS_MPIN_CORRECT_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+    case SET_IS_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: !state.isLoggedIn,
       };
     default:
       return state;

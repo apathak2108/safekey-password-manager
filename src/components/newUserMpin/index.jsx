@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createMpinPost,
   setCreatedMPIN,
+  setIsLoggedIn,
+  setISLoggedIn,
   setIsMpinCreated,
 } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
@@ -63,6 +65,7 @@ const NewUserMPINComponent = () => {
     dispatch(setIsMpinCreated());
     dispatch(setCreatedMPIN(createMPINdigits.join("")));
     dispatch(createMpinPost(createdMpin, phoneNumber));
+    dispatch(setIsLoggedIn());
     navigate("/");
   };
 
