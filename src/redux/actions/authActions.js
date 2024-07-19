@@ -10,9 +10,12 @@ import {
   CREATE_MPIN_POST_REQUEST,
   CREATE_MPIN_POST_SUCCESS,
   CREATE_MPIN_POST_FAILURE,
+  IS_MPIN_CORRECT_REQUEST,
+  IS_MPIN_CORRECT_SUCCESS,
+  IS_MPIN_CORRECT_FAILURE,
+  SET_IS_LOGGED_IN,
 } from "../actionTypes";
 import { API_URL } from "../../constants/paths";
-import { useSelector } from "react-redux";
 
 export const setIsAuth = () => {
   return {
@@ -30,11 +33,10 @@ export const setPhoneNumber = (number) => {
 export const checkPhoneNumber = (phoneNumber) => {
   return async (dispatch) => {
     dispatch({ type: CHECK_PHONE_NUMBER_REQUEST });
-
     try {
-      const response = await axios.get(`${API_URL}/checkUser/${phoneNumber}`);
+      const URL = `${API_URL}/checkUser/${phoneNumber}`;
+      const response = await axios.get(URL);
       const data = response?.data;
-
       dispatch({
         type: CHECK_PHONE_NUMBER_SUCCESS,
         payload: data,
@@ -42,7 +44,7 @@ export const checkPhoneNumber = (phoneNumber) => {
     } catch (err) {
       dispatch({
         type: CHECK_PHONE_NUMBER_FAILURE,
-        err: "Request failed",
+        error: err.message,
       });
     }
   };
@@ -62,7 +64,6 @@ export const setCreatedMPIN = (mpin) => {
 };
 
 export const createMpinPost = (createdMpin, phoneNumber) => {
-  console.log(createdMpin, "createdMpincreatedMpincreatedMpin")
   return async (dispatch) => {
     dispatch({
       type: CREATE_MPIN_POST_REQUEST,
@@ -78,8 +79,36 @@ export const createMpinPost = (createdMpin, phoneNumber) => {
     } catch (err) {
       dispatch({
         type: CREATE_MPIN_POST_FAILURE,
-        err: err.message,
+        error: err.message,
       });
     }
+  };
+};
+
+export const setIsMpinCorrect = (mpin, phoneNumber) => {
+  return async (dispatch) => {
+    dispatch({
+      type: IS_MPIN_CORRECT_REQUEST,
+    });
+    try {
+      const URL = `${API_URL}/mpin/correct/${phoneNumber}/${mpin}`;
+      const response = await axios.get(URL);
+      const data = response.data;
+      dispatch({
+        type: IS_MPIN_CORRECT_SUCCESS,
+        payload: data,
+      });
+    } catch (err) {
+      dispatch({
+        type: IS_MPIN_CORRECT_FAILURE,
+        error: err.message,
+      });
+    }
+  };
+};
+
+export const setIsLoggedIn = () => {
+  return {
+    type: SET_IS_LOGGED_IN,
   };
 };

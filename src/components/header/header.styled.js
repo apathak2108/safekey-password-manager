@@ -7,6 +7,7 @@ export const StyledHeaderContainer = styled.header`
   position: fixed;
   top: 0;
   display: flex;
+  justify-content: space-between;
   z-index: 1;
 `;
 
@@ -19,13 +20,18 @@ export const StyledHeaderLogoContainer = styled.section`
 
 export const StyledHeaderAuthContainer = styled.section`
   height: 100%;
-  width: 50%;
+  width: 30%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
+  color: #fff;
+  gap: 96px;
 `;
 
 export const StyledHeaderLogo = styled.img`
   height: 70%;
   margin-left: 24px;
+`;
+
+export const StyledUserDetails = styled.span`
 `;

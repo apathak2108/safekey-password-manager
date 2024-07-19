@@ -9,14 +9,20 @@ import {
   StyledModalLayout,
 } from "./addModal.styled";
 import InputField from "../inputField";
-import { useDispatch } from "react-redux";
-import { setIsPasswordModalOpen } from "../../redux/actions/homeActions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIsPasswordModalOpen,
+  setUsernameAndPassword,
+} from "../../redux/actions/homeActions";
 import STRINGS from "../../constants/strings";
+import { useNavigate } from "react-router-dom";
 
 const AddPasswordModal = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
 
   const handleUsernameChange = (event) => {
     const value = event?.target?.value;
@@ -25,6 +31,11 @@ const AddPasswordModal = () => {
   const handlePasswordChange = (event) => {
     const value = event.target.value;
     setPassword(value);
+  };
+
+  const handleAddPasswordOnSave = () => {
+    dispatch(setUsernameAndPassword(phoneNumber, username, password));
+    navigate("/");
   };
   return (
     <StyledModalLayout>
@@ -54,7 +65,7 @@ const AddPasswordModal = () => {
             >
               {STRINGS.CANCEL}
             </StyledAddModalButton>
-            <StyledAddModalButton onClick={() => console.log("Clicked save")}>
+            <StyledAddModalButton onClick={handleAddPasswordOnSave}>
               {STRINGS.SAVE}
             </StyledAddModalButton>
           </StyledModalButtons>
