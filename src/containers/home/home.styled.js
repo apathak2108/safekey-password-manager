@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import { PiArrowCircleRightDuotone } from "react-icons/pi";
+import { StyledLayout } from "../../components/layout/layout.styled";
+
+export const HomeLayout = styled(StyledLayout)`
+  align-items: unset;
+`;
 
 export const StyledPasswordsMainContainer = styled.main`
   width: 100%;
@@ -9,7 +14,10 @@ export const StyledPasswordsMainContainer = styled.main`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 12px;
-  margin-top: 260px;
+
+  @media (max-width: 1024px) {
+    padding: 32px 76px 0;
+  }
 `;
 
 export const PasswordContainerHeader = styled.header`

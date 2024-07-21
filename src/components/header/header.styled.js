@@ -25,7 +25,6 @@ export const StyledHeaderAuthContainer = styled.section`
   justify-content: flex-end;
   align-items: center;
   color: #fff;
-  gap: 96px;
 `;
 
 export const StyledHeaderLogo = styled.img`
@@ -34,4 +33,9 @@ export const StyledHeaderLogo = styled.img`
 `;
 
 export const StyledUserDetails = styled.span`
+`;
+
+export const StyledUserDetailsContainer = styled.div`
+  display: flex;
+  gap: 36px;
 `;

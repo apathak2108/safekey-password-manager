@@ -5,6 +5,7 @@ import {
   StyledHeaderLogo,
   StyledHeaderLogoContainer,
   StyledUserDetails,
+  StyledUserDetailsContainer,
 } from "./header.styled";
 import HeaderLogo from "../../assets/header/safekeyLogoWhite.png";
 import Button from "../button";
@@ -28,8 +29,10 @@ const Header = ({ flag = true }) => {
       </StyledHeaderLogoContainer>
       {flag && (
         <StyledHeaderAuthContainer>
-          <StyledUserDetails>{`Hi, ${phoneNumber}`}</StyledUserDetails>
-          <Button name={STRINGS.SIGN_OUT} onClick={handleUserSignOut} />
+          <StyledUserDetailsContainer>
+            <StyledUserDetails>{`Hi, ${phoneNumber}`}</StyledUserDetails>
+            <Button name={STRINGS.SIGN_OUT} onClick={handleUserSignOut} />
+          </StyledUserDetailsContainer>
         </StyledHeaderAuthContainer>
       )}
     </StyledHeaderContainer>

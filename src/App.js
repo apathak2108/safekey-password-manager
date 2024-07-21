@@ -14,7 +14,7 @@ const App = () => {
         <Route
           path="/"
           element={
-            isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/auth" />
+            isLoggedIn ? <HomeAdaptive /> : <Navigate to="/auth" />
           }
         />
         <Route path="/auth" element={<AuthAdaptive />} />
