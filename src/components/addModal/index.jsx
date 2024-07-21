@@ -35,6 +35,7 @@ const AddPasswordModal = () => {
 
   const handleAddPasswordOnSave = () => {
     dispatch(setUsernameAndPassword(phoneNumber, username, password));
+    dispatch(setIsPasswordModalOpen());
     navigate("/");
   };
   return (

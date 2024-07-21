@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Layout from "../../components/layout";
+import React, { useEffect } from "react";
 import Header from "../../components/header";
 import {
+  HomeLayout,
   PasswordContainerHeader,
   StyledAddButton,
   StyledArrowIcon,
@@ -15,8 +15,12 @@ import AddPasswordModal from "../../components/addModal";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getUserAllCredentials,
   setIsMpinModalOpen,
   setIsPasswordModalOpen,
+  setSelectedPassword,
+  setSelectedUserId,
+  setSelectedUsername,
 } from "../../redux/actions/homeActions";
 import ExistingUserMPINComponent from "../../components/existingUserMpin";
 import EditAndDeleteModal from "../../components/editModal";
@@ -25,11 +29,24 @@ const HomeContainer = () => {
   const dispatch = useDispatch();
   const isModal = useSelector((state) => state?.home?.isPasswordModal);
   const isMpinModal = useSelector((state) => state?.home?.isMpinModal);
+  const allUsernames = useSelector(
+    (state) => state?.home?.userAllCredentials?.data
+  );
+  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  const handleCredentialActions = (id, username, password) => {
+    dispatch(setSelectedUserId(id));
+    dispatch(setSelectedUsername(username));
+    dispatch(setSelectedPassword(password));
+  };
+
+  useEffect(() => {
+    dispatch(getUserAllCredentials(phoneNumber));
+  }, []);
 
   return (
     <>
       <Header />
-      <Layout>
+      <HomeLayout>
         {!isModal && !isMpinModal && (
           <StyledPasswordsMainContainer>
             <PasswordContainerHeader>
@@ -44,12 +61,18 @@ const HomeContainer = () => {
               {STRINGS.HOME_DESCRIPTION_TEXT}
             </StyledDescriptionContainer>
             <StyledPasswordCardsContainer>
-              {[1, 1, 1, 1, 1, 1, 1].map((_, index) => (
+              {allUsernames?.map((credential, index) => (
                 <StyledPasswordCard
                   key={index}
-                  onClick={() => dispatch(setIsMpinModalOpen())}
+                  onClick={() =>
+                    handleCredentialActions(
+                      credential?._id,
+                      credential?.originName,
+                      credential?.originPassword
+                    )
+                  }
                 >
-                  Dummy Title
+                  {credential?.originName}
                   <StyledArrowIcon />
                 </StyledPasswordCard>
               ))}
@@ -58,8 +81,8 @@ const HomeContainer = () => {
         )}
         {isModal && <AddPasswordModal />}
         {isMpinModal && <ExistingUserMPINComponent />}
-        {/* <EditAndDeleteModal /> */}
-      </Layout>
+        <EditAndDeleteModal />
+      </HomeLayout>
     </>
   );
 };

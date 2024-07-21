@@ -2,8 +2,18 @@ import {
   ADD_USERNAME_AND_PASS_FAILURE,
   ADD_USERNAME_AND_PASS_REQUEST,
   ADD_USERNAME_AND_PASS_SUCCESS,
+  DELETE_USER_CREDENTIAL_FAILURE,
+  DELETE_USER_CREDENTIAL_REQUEST,
+  DELETE_USER_CREDENTIAL_SUCCESS,
+  GET_USER_PASSWORDS_FAILURE,
+  GET_USER_PASSWORDS_REQUEST,
+  GET_USER_PASSWORDS_SUCCESS,
   IS_MPIN_MODAL_OPEN,
   IS_PASSWORD_MODAL_OPEN,
+  SET_LOGGEDIN_USER_MPIN,
+  SET_SELECTED_ID,
+  SET_SELECTED_PASSWORD,
+  SET_SELECTED_USERNAME,
 } from "../actionTypes";
 
 const initialState = {
@@ -12,6 +22,12 @@ const initialState = {
   error: "",
   isPasswordModal: false,
   isMpinModal: false,
+  userAllCredentials: null,
+  deleteResponseData: null,
+  loggedInUserMpin: null,
+  selectedId: null,
+  selectedUsername: "",
+  selectedPassword: "",
 };
 
 export const homeReducer = (state = initialState, action) => {
@@ -34,14 +50,69 @@ export const homeReducer = (state = initialState, action) => {
     case ADD_USERNAME_AND_PASS_FAILURE:
       return {
         ...state,
-        loading: false,
-        error: action.error,
+        loading: fals,
+        e,
+        error: action?.error,
       };
     case ADD_USERNAME_AND_PASS_SUCCESS:
       return {
         ...state,
         loading: false,
-        postResponseData: action.payload,
+        postResponseData: action?.payload,
+      };
+    case GET_USER_PASSWORDS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_USER_PASSWORDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        userAllCredentials: action?.payload,
+      };
+    case GET_USER_PASSWORDS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action?.error,
+      };
+    case DELETE_USER_CREDENTIAL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_USER_CREDENTIAL_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        deleteResponseData: action?.payload,
+      };
+    case DELETE_USER_CREDENTIAL_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action?.error,
+      };
+    case SET_LOGGEDIN_USER_MPIN:
+      return {
+        ...state,
+        loggedInUserMpin: action?.payload,
+      };
+    case SET_SELECTED_USERNAME:
+      return {
+        ...state,
+        selectedUsername: action?.payload,
+      };
+    case SET_SELECTED_PASSWORD:
+      return {
+        ...state,
+        selectedPassword: action?.payload,
+      };
+    case SET_SELECTED_ID:
+      return {
+        ...state,
+        selectedId: action?.payload,
       };
     default:
       return state;

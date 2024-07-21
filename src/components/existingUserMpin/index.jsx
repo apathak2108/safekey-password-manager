@@ -15,7 +15,6 @@ import { handleMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsLoggedIn,
-  setISLoggedIn,
   setIsMpinCorrect,
 } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";

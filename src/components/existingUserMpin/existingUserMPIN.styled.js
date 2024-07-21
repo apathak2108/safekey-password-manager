@@ -32,4 +32,5 @@ export const StyledInputCard = styled.main`
   border-radius: 6px;
   padding: 24px;
   gap: 4px;
+  margin: auto;
 `;
