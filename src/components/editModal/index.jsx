@@ -1,6 +1,8 @@
 import React from "react";
 import {
   StyledAddModalButton,
+  StyledDeleteButton,
+  StyledEditButton,
   StyledModalLayout,
 } from "../addModal/addModal.styled";
 import {
@@ -11,7 +13,14 @@ import {
 import InputField from "../inputField";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedPassword, setSelectedUsername } from "../../redux/actions/homeActions";
+import {
+  deleteUserCrederential,
+  setSelectedPassword,
+  setSelectedUsername,
+  setUpdatedCredential,
+} from "../../redux/actions/homeActions";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditAndDeleteModal = () => {
   const dispatch = useDispatch();
@@ -21,6 +30,21 @@ const EditAndDeleteModal = () => {
   const selectedPassword = useSelector(
     (state) => state?.home?.selectedPassword
   );
+  const selectedId = useSelector((state) => state?.home?.selectedId);
+  const deleteResponseData = useSelector(
+    (state) => state?.home?.deleteResponseData
+  );
+  const loading = useSelector((state) => state?.home?.loading);
+  const handleDeleteCredential = () => {
+    dispatch(deleteUserCrederential(selectedId));
+  };
+
+  const handleEditCredential = () => {
+    dispatch(
+      setUpdatedCredential(selectedId, selectedUsername, selectedPassword)
+    );
+  };
+
   return (
     <StyledModalLayout>
       <StyledEditModalContainer>
@@ -42,8 +66,12 @@ const EditAndDeleteModal = () => {
         </StyledEditModalInputContainer>
         <hr style={{ width: "100%", color: "lightgray" }} />
         <StyledEditModalButtonsContainer>
-          <StyledAddModalButton>Edit</StyledAddModalButton>
-          <StyledAddModalButton>Delete</StyledAddModalButton>
+          <StyledEditButton onClick={handleEditCredential}>
+            {STRINGS.EDIT}
+          </StyledEditButton>
+          <StyledDeleteButton onClick={handleDeleteCredential}>
+            {STRINGS.DELETE}
+          </StyledDeleteButton>
         </StyledEditModalButtonsContainer>
       </StyledEditModalContainer>
     </StyledModalLayout>

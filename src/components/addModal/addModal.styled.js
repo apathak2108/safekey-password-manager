@@ -51,6 +51,22 @@ export const StyledAddModalButton = styled.button`
   }
 `;
 
+export const StyledEditButton = styled(StyledAddModalButton)`
+  background-color: #eaf5f9;
+
+  &:hover {
+    background-color: #d6ecf2;
+  }
+`;
+
+export const StyledDeleteButton = styled(StyledAddModalButton)`
+  background-color: #ffbfbf;
+
+  &:hover {
+    background-color: #ff9999;
+  }
+`;
+
 export const StyledModalLayout = styled.main`
   height: 100%;
   width: 100%;

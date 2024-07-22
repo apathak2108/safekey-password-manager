@@ -14,6 +14,11 @@ import {
   DELETE_USER_CREDENTIAL_SUCCESS,
   SET_LOGGEDIN_USER_MPIN,
   SET_SELECTED_USERNAME,
+  SET_SELECTED_ID,
+  SET_SELECTED_PASSWORD,
+  SET_UPDATED_CREDENTIAL_REQUEST,
+  SET_UPDATED_CREDENTIAL_FAILURE,
+  SET_UPDATED_CREDENTIAL_SUCCESS,
 } from "../actionTypes";
 
 export const setIsPasswordModalOpen = () => {
@@ -112,7 +117,7 @@ export const setSelectedUsername = (username) => {
 
 export const setSelectedPassword = (password) => {
   return {
-    type: SET_SELECTED_USERNAME,
+    type: SET_SELECTED_PASSWORD,
     payload: password,
   };
 };
@@ -121,5 +126,31 @@ export const setSelectedUserId = (id) => {
   return {
     type: SET_SELECTED_ID,
     payload: id,
+  };
+};
+
+export const setUpdatedCredential = (id, updatedUsername, updatedPassword) => {
+  return async (dispatch) => {
+    dispatch({
+      type: SET_UPDATED_CREDENTIAL_REQUEST,
+    });
+    try {
+      const URL = `${API_URL}/update/originandpassword`;
+      const dataToUpdate = {
+        _id: id,
+        originName: updatedUsername,
+        originPassword: updatedPassword,
+      };
+      const response = axios.put(URL, dataToUpdate);
+      dispatch({
+        type: SET_UPDATED_CREDENTIAL_SUCCESS,
+        payload: response?.data,
+      });
+    } catch (err) {
+      dispatch({
+        type: SET_UPDATED_CREDENTIAL_FAILURE,
+        error: err.message,
+      });
+    }
   };
 };

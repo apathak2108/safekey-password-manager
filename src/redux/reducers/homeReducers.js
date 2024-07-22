@@ -14,6 +14,9 @@ import {
   SET_SELECTED_ID,
   SET_SELECTED_PASSWORD,
   SET_SELECTED_USERNAME,
+  SET_UPDATED_CREDENTIAL_FAILURE,
+  SET_UPDATED_CREDENTIAL_REQUEST,
+  SET_UPDATED_CREDENTIAL_SUCCESS,
 } from "../actionTypes";
 
 const initialState = {
@@ -28,6 +31,7 @@ const initialState = {
   selectedId: null,
   selectedUsername: "",
   selectedPassword: "",
+  updatedDataResponse: null,
 };
 
 export const homeReducer = (state = initialState, action) => {
@@ -50,7 +54,7 @@ export const homeReducer = (state = initialState, action) => {
     case ADD_USERNAME_AND_PASS_FAILURE:
       return {
         ...state,
-        loading: fals,
+        loading: false,
         e,
         error: action?.error,
       };
@@ -113,6 +117,23 @@ export const homeReducer = (state = initialState, action) => {
       return {
         ...state,
         selectedId: action?.payload,
+      };
+    case SET_UPDATED_CREDENTIAL_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case SET_UPDATED_CREDENTIAL_SUCCESS:
+      return {
+        ...state,
+        updatedDataResponse: action?.payload,
+        loading: false,
+      };
+    case SET_UPDATED_CREDENTIAL_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action?.error,
       };
     default:
       return state;

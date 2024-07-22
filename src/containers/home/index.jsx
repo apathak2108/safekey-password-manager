@@ -32,7 +32,7 @@ const HomeContainer = () => {
   const allUsernames = useSelector(
     (state) => state?.home?.userAllCredentials?.data
   );
-  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  const phoneNumber = localStorage.getItem("loggedUse");
   const handleCredentialActions = (id, username, password) => {
     dispatch(setSelectedUserId(id));
     dispatch(setSelectedUsername(username));
