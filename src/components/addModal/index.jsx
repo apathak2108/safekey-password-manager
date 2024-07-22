@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import {
-  StyledAddModalButton,
   StyledAddModalButtonsContainer,
   StyledAddModalContainer,
   StyledAddModalInputContainer,
+  StyledDeleteButton,
+  StyledEditButton,
   StyledHeaderText,
   StyledModalButtons,
   StyledModalLayout,
@@ -61,14 +62,14 @@ const AddPasswordModal = () => {
         <span>{STRINGS.ADD_PASSWORD_DESCRIPTION_TEXT}</span>
         <StyledAddModalButtonsContainer>
           <StyledModalButtons>
-            <StyledAddModalButton
+            <StyledDeleteButton
               onClick={() => dispatch(setIsPasswordModalOpen())}
             >
               {STRINGS.CANCEL}
-            </StyledAddModalButton>
-            <StyledAddModalButton onClick={handleAddPasswordOnSave}>
+            </StyledDeleteButton>
+            <StyledEditButton onClick={handleAddPasswordOnSave}>
               {STRINGS.SAVE}
-            </StyledAddModalButton>
+            </StyledEditButton>
           </StyledModalButtons>
         </StyledAddModalButtonsContainer>
       </StyledAddModalContainer>

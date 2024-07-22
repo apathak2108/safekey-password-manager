@@ -14,7 +14,6 @@ import {
 import { handleMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setIsLoggedIn,
   setIsMpinCorrect,
 } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
@@ -47,8 +46,9 @@ const ExistingUserMPINComponent = () => {
 
   const handleIsExistingUser = () => {
     if (isMpinCorrect) {
-      dispatch(setIsLoggedIn());
       navigate("/");
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("loggedUser", phoneNumber);
     } else {
       alert("Entered MPIN is wrong !");
     }

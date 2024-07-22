@@ -38,4 +38,5 @@ export const StyledUserDetails = styled.span`
 export const StyledUserDetailsContainer = styled.div`
   display: flex;
   gap: 36px;
+  align-items: center;
 `;

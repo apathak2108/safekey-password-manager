@@ -27,6 +27,8 @@ const STRINGS = {
     "Make sure you're saving your current password for this site",
   CANCEL: "Cancel",
   SAVE: "Save",
+  DELETE: "Delete",
+  EDIT: "Edit",
 };
 
 export default STRINGS;

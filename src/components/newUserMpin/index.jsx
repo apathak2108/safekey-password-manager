@@ -15,8 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   createMpinPost,
   setCreatedMPIN,
-  setIsLoggedIn,
-  setISLoggedIn,
   setIsMpinCreated,
 } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
@@ -30,7 +28,6 @@ const NewUserMPINComponent = () => {
   const [createMPINError, setCreateMPINError] = useState("");
   const [isContinueDisabled, setIsContinueDisabled] = useState(true);
   const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
-  // const createdMpin = useSelector((state) => state?.auth?.createdMpin);
 
   const createInputRefs = useRef([]);
   const reEnterInputRefs = useRef([]);
@@ -65,8 +62,9 @@ const NewUserMPINComponent = () => {
     dispatch(setIsMpinCreated());
     dispatch(setCreatedMPIN(createMPINdigits.join("")));
     dispatch(createMpinPost(createdMpin, phoneNumber));
-    dispatch(setIsLoggedIn());
     navigate("/");
+    localStorage.setItem("isLoggedIn", true);
+    localStorage.setItem("loggedUser", phoneNumber);
   };
 
   return (

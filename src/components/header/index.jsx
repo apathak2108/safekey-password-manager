@@ -10,15 +10,15 @@ import {
 import HeaderLogo from "../../assets/header/safekeyLogoWhite.png";
 import Button from "../button";
 import STRINGS from "../../constants/strings";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../../redux/actions/authActions";
 
 const Header = ({ flag = true }) => {
   const dispatch = useDispatch();
-  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
-
+  const phoneNumber = localStorage?.getItem("loggedUser");
   const handleUserSignOut = () => {
     dispatch(setIsLoggedIn());
+    localStorage.removeItem("isLoggedIn");
     location.reload();
   };
 
