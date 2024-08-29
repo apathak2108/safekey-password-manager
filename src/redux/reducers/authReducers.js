@@ -45,14 +45,15 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        userExist: action?.payload?.userExist,
+        userExist: action.payload.userExist,
+        error: "",
       };
     case CHECK_PHONE_NUMBER_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.error,
-        userExist: false,
+        // error: action.error,
+        // userExist: false,
       };
     case SET_AUTH_STATUS:
       return {
@@ -79,6 +80,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         postResponseData: action.payload,
+        error: "",
       };
     case CREATE_MPIN_POST_FAILURE:
       return {
@@ -96,6 +98,7 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         isMpinCorrect: action.payload?.mpin,
+        error: "",
       };
     case IS_MPIN_CORRECT_FAILURE:
       return {

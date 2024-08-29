@@ -5,6 +5,7 @@ import PhoneAuthComponent from "../../components/phoneAuth";
 import ExistingUserMPINComponent from "../../components/existingUserMpin";
 import NewUserMPINComponent from "../../components/newUserMpin";
 import { useSelector } from "react-redux";
+import Loader from "../../components/loader";
 
 const AuthContainer = () => {
   const isAuth = useSelector((state) => state?.auth?.isAuth);

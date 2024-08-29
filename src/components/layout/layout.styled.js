@@ -9,6 +9,6 @@ export const StyledLayout = styled.div`
   align-items: center;
   position: relative;
   top: 64px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  // overflow-y: scroll;
+  // overflow-x: hidden;
 `;

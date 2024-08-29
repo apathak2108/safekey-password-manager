@@ -19,6 +19,7 @@ import {
   SET_UPDATED_CREDENTIAL_REQUEST,
   SET_UPDATED_CREDENTIAL_FAILURE,
   SET_UPDATED_CREDENTIAL_SUCCESS,
+  SET_IS_EDIT_MODAL_OPEN,
 } from "../actionTypes";
 
 export const setIsPasswordModalOpen = () => {
@@ -98,6 +99,13 @@ export const deleteUserCrederential = (id) => {
         error: err.message,
       });
     }
+  };
+};
+
+export const setIsEditModalOpen = (value) => {
+  return {
+    type: SET_IS_EDIT_MODAL_OPEN,
+    payload: value,
   };
 };
 

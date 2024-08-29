@@ -36,7 +36,7 @@ export const checkPhoneNumber = (phoneNumber) => {
     try {
       const URL = `${API_URL}/checkUser/${phoneNumber}`;
       const response = await axios.get(URL);
-      const data = response?.data;
+      const data = response.data;
       dispatch({
         type: CHECK_PHONE_NUMBER_SUCCESS,
         payload: data,

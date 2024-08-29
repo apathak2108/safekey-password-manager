@@ -19,7 +19,7 @@ import {
   setPhoneNumber,
 } from "../../redux/actions/authActions";
 import { handlePhoneInputChange } from "../../utils";
-import { ClipLoader } from "react-spinners";
+import Loader from "../loader";
 
 const PhoneAuthComponent = () => {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const PhoneAuthComponent = () => {
         {phoneError && <StyledErrorMessage>{phoneError}</StyledErrorMessage>}
         <StyledIndiaIcon src={INDIA_ICON_PATH} alt="india-icon" />
         <StyledContinueButton onClick={handlePhoneNumberContinue}>
-          {loading ? <ClipLoader color="white" size={30} /> : STRINGS.CONTINUE}
+          {loading ? <Loader /> : STRINGS.CONTINUE}
         </StyledContinueButton>
       </StyledInputContainer>
     </StyledMobileInputContainer>

@@ -8,6 +8,7 @@ import {
 import STRINGS from "../../constants/strings";
 import {
   StyledContinueButton,
+  StyledErrorContainer,
   StyledErrorMessage,
 } from "../phoneAuth/phoneAuth.styled";
 import { handleCreateMPINChange, handleReEnterMPINChange } from "../../utils";
@@ -18,6 +19,7 @@ import {
   setIsMpinCreated,
 } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import Loader from "../loader";
 
 const NewUserMPINComponent = () => {
   const dispatch = useDispatch();
@@ -28,6 +30,8 @@ const NewUserMPINComponent = () => {
   const [createMPINError, setCreateMPINError] = useState("");
   const [isContinueDisabled, setIsContinueDisabled] = useState(true);
   const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  const loading = useSelector((state) => state?.auth?.loading);
+  const error = useSelector((state) => state?.auth?.error);
 
   const createInputRefs = useRef([]);
   const reEnterInputRefs = useRef([]);
@@ -68,45 +72,51 @@ const NewUserMPINComponent = () => {
   };
 
   return (
-    <StyledInputCard>
-      <StyledTextContainer>{STRINGS.CREATE_MPIN}</StyledTextContainer>
-      <StyledMPINInputContainer>
-        {[0, 1, 2, 3].map((key, index) => (
-          <StyledDigitInput
-            key={index}
-            type={STRINGS.PASSWORD_INPUT_TYPE}
-            maxLength={STRINGS.MPIN_MAXLEN}
-            onChange={(event) => handleCreateInputChange(event, index)}
-            ref={(el) => (createInputRefs.current[index] = el)}
-          />
-        ))}
-      </StyledMPINInputContainer>
-      {createMPINError && (
-        <StyledErrorMessage>{createMPINError}</StyledErrorMessage>
-      )}
-      <hr />
-      <StyledTextContainer>{STRINGS.RE_ENTER_MPIN}</StyledTextContainer>
-      <StyledMPINInputContainer>
-        {[0, 1, 2, 3].map((_, index) => (
-          <StyledDigitInput
-            key={index}
-            type={STRINGS.PASSWORD_INPUT_TYPE}
-            maxLength="1"
-            onChange={(event) => handleReEnterInputChange(event, index)}
-            ref={(el) => (reEnterInputRefs.current[index] = el)}
-          />
-        ))}
-      </StyledMPINInputContainer>
-      {reEnterMPINError && (
-        <StyledErrorMessage>{reEnterMPINError}</StyledErrorMessage>
-      )}
-      <StyledContinueButton
-        disabled={isContinueDisabled}
-        onClick={handleNewMpinCreated}
-      >
-        {STRINGS.CONTINUE}
-      </StyledContinueButton>
-    </StyledInputCard>
+    <>
+      {loading && !error && <Loader />}
+      {!loading && error && <StyledErrorContainer>{error}</StyledErrorContainer>}
+      {!loading && !error && (
+        <StyledInputCard>
+          <StyledTextContainer>{STRINGS.CREATE_MPIN}</StyledTextContainer>
+          <StyledMPINInputContainer>
+            {[0, 1, 2, 3].map((_, index) => (
+              <StyledDigitInput
+                key={index}
+                type={STRINGS.PASSWORD_INPUT_TYPE}
+                maxLength={STRINGS.MPIN_MAXLEN}
+                onChange={(event) => handleCreateInputChange(event, index)}
+                ref={(el) => (createInputRefs.current[index] = el)}
+              />
+            ))}
+          </StyledMPINInputContainer>
+          {createMPINError && (
+            <StyledErrorMessage>{createMPINError}</StyledErrorMessage>
+          )}
+          <hr />
+          <StyledTextContainer>{STRINGS.RE_ENTER_MPIN}</StyledTextContainer>
+          <StyledMPINInputContainer>
+            {[0, 1, 2, 3].map((_, index) => (
+              <StyledDigitInput
+                key={index}
+                type={STRINGS.PASSWORD_INPUT_TYPE}
+                maxLength="1"
+                onChange={(event) => handleReEnterInputChange(event, index)}
+                ref={(el) => (reEnterInputRefs.current[index] = el)}
+              />
+            ))}
+          </StyledMPINInputContainer>
+          {reEnterMPINError && (
+            <StyledErrorMessage>{reEnterMPINError}</StyledErrorMessage>
+          )}
+          <StyledContinueButton
+            disabled={isContinueDisabled}
+            onClick={handleNewMpinCreated}
+          >
+            {STRINGS.CONTINUE}
+          </StyledContinueButton>
+        </StyledInputCard>
+      )}{" "}
+    </>
   );
 };
 

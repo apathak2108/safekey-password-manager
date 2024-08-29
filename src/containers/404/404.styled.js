@@ -6,3 +6,5 @@ export const StyledErrorPageLayout = styled(StyledLayout)`
   align-items: center;
   justify-content: center;
 `;
+
+export const StyledReturnToHomeButton = styled.button
