@@ -10,6 +10,7 @@ import {
   GET_USER_PASSWORDS_SUCCESS,
   IS_MPIN_MODAL_OPEN,
   IS_PASSWORD_MODAL_OPEN,
+  SET_IS_EDIT_MODAL_OPEN,
   SET_LOGGEDIN_USER_MPIN,
   SET_SELECTED_ID,
   SET_SELECTED_PASSWORD,
@@ -25,6 +26,7 @@ const initialState = {
   error: "",
   isPasswordModal: false,
   isMpinModal: false,
+  isEditModal: false,
   userAllCredentials: null,
   deleteResponseData: null,
   loggedInUserMpin: null,
@@ -55,7 +57,6 @@ export const homeReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        e,
         error: action?.error,
       };
     case ADD_USERNAME_AND_PASS_SUCCESS:
@@ -134,6 +135,11 @@ export const homeReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action?.error,
+      };
+    case SET_IS_EDIT_MODAL_OPEN:
+      return {
+        ...state,
+        isEditModal: action?.payload,
       };
     default:
       return state;

@@ -42,6 +42,27 @@ export const handleMPINChange = (
   }
 };
 
+// handling backspace on mpin input field
+export const handleKeyDown = (event, index, digits, inputRefs, handleInputChange) => {
+  if (event.key === "Backspace") {
+    if (!digits[index] && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+    if (digits[index]) {
+      handleInputChange({ target: { value: "" } }, index);
+    }
+  } else if (event.key === "ArrowLeft" && index > 0 && !digits[index]) {
+    inputRefs.current[index - 1].focus();
+  } else if (
+    event.key === "ArrowRight" &&
+    index < inputRefs.current.length - 1 &&
+    !digits[index]
+  ) {
+    inputRefs.current[index + 1].focus();
+  }
+};
+
+
 // newUserMpin
 export const handleCreateMPINChange = (
   event,

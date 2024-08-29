@@ -78,10 +78,14 @@ export const StyledContinueButton = styled.button`
   }
 `;
 
-export const StyledErrorMessage = styled.p`
-  margin: 0;
-  padding: 0;
+export const StyledErrorMessage = styled.span`
   font-size: 14px;
   color: red;
   margin-top: 8px;
+`;
+
+export const StyledErrorContainer = styled.span`
+  font-size: 1.25rem;
+  color: #ff0000;
+  letter-spacing: 1px;
 `;

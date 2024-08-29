@@ -16,6 +16,7 @@ import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserAllCredentials,
+  setIsEditModalOpen,
   setIsMpinModalOpen,
   setIsPasswordModalOpen,
   setSelectedPassword,
@@ -27,13 +28,17 @@ import EditAndDeleteModal from "../../components/editModal";
 
 const HomeContainer = () => {
   const dispatch = useDispatch();
-  const isModal = useSelector((state) => state?.home?.isPasswordModal);
+  const isNewPasswordModal = useSelector(
+    (state) => state?.home?.isPasswordModal
+  );
   const isMpinModal = useSelector((state) => state?.home?.isMpinModal);
+  const isEditModal = useSelector((state) => state?.home?.isEditModal);
   const allUsernames = useSelector(
     (state) => state?.home?.userAllCredentials?.data
   );
-  const phoneNumber = localStorage.getItem("loggedUse");
+  const phoneNumber = localStorage.getItem("loggedUser");
   const handleCredentialActions = (id, username, password) => {
+    dispatch(setIsEditModalOpen(true));
     dispatch(setSelectedUserId(id));
     dispatch(setSelectedUsername(username));
     dispatch(setSelectedPassword(password));
@@ -47,7 +52,7 @@ const HomeContainer = () => {
     <>
       <Header />
       <HomeLayout>
-        {!isModal && !isMpinModal && (
+        {!isNewPasswordModal && !isMpinModal && !isEditModal && (
           <StyledPasswordsMainContainer>
             <PasswordContainerHeader>
               <StyledHeaderText>{STRINGS.PASSWORDS}</StyledHeaderText>
@@ -79,9 +84,9 @@ const HomeContainer = () => {
             </StyledPasswordCardsContainer>
           </StyledPasswordsMainContainer>
         )}
-        {isModal && <AddPasswordModal />}
+        {isNewPasswordModal && <AddPasswordModal />}
         {isMpinModal && <ExistingUserMPINComponent />}
-        <EditAndDeleteModal />
+        {isEditModal && <EditAndDeleteModal />}
       </HomeLayout>
     </>
   );
