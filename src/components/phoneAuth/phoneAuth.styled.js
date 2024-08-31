@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledLoader } from "../loader/loader.styled";
 
 export const StyledMobileInputContainer = styled.main`
   display: flex;
@@ -88,4 +89,12 @@ export const StyledErrorContainer = styled.span`
   font-size: 1.25rem;
   color: #ff0000;
   letter-spacing: 1px;
+`;
+
+export const StyledPhoneAuthLoader = styled(StyledLoader)`
+  margin: auto;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  width: 15px;
+  height: 15px;
 `;

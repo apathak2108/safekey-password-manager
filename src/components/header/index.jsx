@@ -11,7 +11,6 @@ import HeaderLogo from "../../assets/header/safekeyLogoWhite.png";
 import Button from "../button";
 import STRINGS from "../../constants/strings";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn } from "../../redux/actions/authActions";
 
 const Header = ({ flag = true }) => {
   const dispatch = useDispatch();

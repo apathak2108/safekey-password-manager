@@ -13,11 +13,6 @@ import {
 } from "../phoneAuth/phoneAuth.styled";
 import { handleCreateMPINChange, handleReEnterMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createMpinPost,
-  setCreatedMPIN,
-  setIsMpinCreated,
-} from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader";
 
@@ -61,15 +56,15 @@ const NewUserMPINComponent = () => {
     );
   };
 
-  const handleNewMpinCreated = () => {
-    const createdMpin = createMPINdigits.join("");
-    dispatch(setIsMpinCreated());
-    dispatch(setCreatedMPIN(createMPINdigits.join("")));
-    dispatch(createMpinPost(createdMpin, phoneNumber));
-    navigate("/");
-    localStorage.setItem("isLoggedIn", true);
-    localStorage.setItem("loggedUser", phoneNumber);
-  };
+  // const handleNewMpinCreated = () => {
+  //   const createdMpin = createMPINdigits.join("");
+  //   dispatch(setIsMpinCreated());
+  //   dispatch(setCreatedMPIN(createMPINdigits.join("")));
+  //   dispatch(createMpinPost(createdMpin, phoneNumber));
+  //   navigate("/");
+  //   localStorage.setItem("isLoggedIn", true);
+  //   localStorage.setItem("loggedUser", phoneNumber);
+  // };
 
   return (
     <>
