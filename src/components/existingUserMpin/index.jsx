@@ -27,14 +27,12 @@ const ExistingUserMPINComponent = () => {
   const [digits, setDigits] = useState(["", "", "", ""]);
   const [mpinError, setMPINError] = useState("");
   const inputRefs = useRef([]);
-  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
-  const isMpinCorrect = useSelector((state) => state?.auth?.isMpinCorrect);
+  // const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  // const isMpinCorrect = useSelector((state) => state?.auth?.isMpinCorrect);
   const loading = useSelector((state) => state?.auth?.loading);
   const error = useSelector((state) => state?.auth?.error);
   const mpin = digits.join("");
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
-
-  console.log("error:", error, "loading:", loading);
+  // const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   const handleInputChange = (event, index) => {
     handleMPINChange(
@@ -48,28 +46,28 @@ const ExistingUserMPINComponent = () => {
     );
   };
 
-  const handleClearNumber = (event, index) => {
-    handleKeyDown(event, index, digits, inputRefs, handleInputChange);
-  };
+  // const handleClearNumber = (event, index) => {
+  //   handleKeyDown(event, index, digits, inputRefs, handleInputChange);
+  // };
 
-  useEffect(() => {
-    dispatch(setIsMpinCorrect(mpin, phoneNumber));
-  }, [mpin.length === 4]);
+  // useEffect(() => {
+  //   dispatch(setIsMpinCorrect(mpin, phoneNumber));
+  // }, [mpin.length === 4]);
 
-  const handleIsExistingUser = () => {
-    if (isLoggedIn) {
-      dispatch(setIsEditModalOpen(true));
-      dispatch(setIsMpinModalOpen());
-    } else {
-      if (isMpinCorrect) {
-        navigate("/");
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("loggedUser", phoneNumber);
-      } else {
-        alert("Entered MPIN is wrong !");
-      }
-    }
-  };
+  // const handleIsExistingUser = () => {
+  //   if (isLoggedIn) {
+  //     dispatch(setIsEditModalOpen(true));
+  //     dispatch(setIsMpinModalOpen());
+  //   } else {
+  //     if (isMpinCorrect) {
+  //       navigate("/");
+  //       localStorage.setItem("isLoggedIn", true);
+  //       localStorage.setItem("loggedUser", phoneNumber);
+  //     } else {
+  //       alert("Entered MPIN is wrong !");
+  //     }
+  //   }
+  // };
 
   return (
     <>

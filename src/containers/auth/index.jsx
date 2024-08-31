@@ -9,15 +9,15 @@ import Loader from "../../components/loader";
 
 const AuthContainer = () => {
   const isAuth = useSelector((state) => state?.auth?.isAuth);
-  const userExist = useSelector((state) => state?.auth?.userExist);
+  const userExists = useSelector((state) => state?.auth?.userExists);
 
   return (
     <>
       <Header flag={false} />
       <StyledAuthLayout>
         {!isAuth && <PhoneAuthComponent />}
-        {userExist && isAuth && <ExistingUserMPINComponent />}
-        {!userExist && isAuth && <NewUserMPINComponent />}
+        {userExists && <ExistingUserMPINComponent />}
+        {/* {!userExist && isAuth && <NewUserMPINComponent />} */}
       </StyledAuthLayout>
     </>
   );
