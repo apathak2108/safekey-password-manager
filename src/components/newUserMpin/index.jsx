@@ -56,15 +56,15 @@ const NewUserMPINComponent = () => {
     );
   };
 
-  // const handleNewMpinCreated = () => {
-  //   const createdMpin = createMPINdigits.join("");
-  //   dispatch(setIsMpinCreated());
-  //   dispatch(setCreatedMPIN(createMPINdigits.join("")));
-  //   dispatch(createMpinPost(createdMpin, phoneNumber));
-  //   navigate("/");
-  //   localStorage.setItem("isLoggedIn", true);
-  //   localStorage.setItem("loggedUser", phoneNumber);
-  // };
+  const handleNewMpinCreated = () => {
+    const createdMpin = createMPINdigits.join("");
+    dispatch(setIsMpinCreated());
+    dispatch(setCreatedMPIN(createMPINdigits.join("")));
+    dispatch(createMpinPost(createdMpin, phoneNumber));
+    navigate("/");
+    localStorage.setItem("isLoggedIn", true);
+    localStorage.setItem("loggedUser", phoneNumber);
+  };
 
   return (
     <>
