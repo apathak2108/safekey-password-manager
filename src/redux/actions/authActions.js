@@ -1,10 +1,13 @@
-import axios from "axios";
+import db from "../../firebase";
 import {
   CHECK_USER_EXISTENCE_REQUEST,
   CHECK_USER_EXISTENCE_SUCCESS,
   CHECK_USER_EXISTENCE_FAILURE,
+  CREATE_NEW_USER_REQUEST,
+  CREATE_NEW_USER_SUCCESS,
+  UPDATE_USER_DATA_SUCCESS,
+  CREATE_NEW_USER_FAILURE,
 } from "../actionTypes";
-import db from "../../firebase";
 
 export const checkUserExistence = (mobileNumber) => {
   return async (dispatch) => {
@@ -25,7 +28,7 @@ export const checkUserExistence = (mobileNumber) => {
     } catch (err) {
       dispatch({
         type: CHECK_USER_EXISTENCE_FAILURE,
-        error: err.message,
+        error: err,
       });
     }
   };

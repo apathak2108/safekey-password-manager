@@ -91,9 +91,7 @@ const ExistingUserMPINComponent = () => {
             ))}
           </StyledMPINInputContainer>
           {mpinError && <StyledErrorMessage>{mpinError}</StyledErrorMessage>}
-          <StyledContinueButton onClick={handleIsExistingUser}>
-            {STRINGS.CONTINUE}
-          </StyledContinueButton>
+          <StyledContinueButton>{STRINGS.CONTINUE}</StyledContinueButton>
         </StyledInputCard>
       )}
     </>
