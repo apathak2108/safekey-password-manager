@@ -15,8 +15,9 @@ import { handleCreateMPINChange, handleReEnterMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader";
+import { createUserOrUpdate } from "../../redux/actions/userActions";
 
-const NewUserMPINComponent = () => {
+const NewUserMPINComponent = ({ mobileNumber }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [createMPINdigits, setCreateMPINDigits] = useState(["", "", "", ""]);
@@ -24,9 +25,7 @@ const NewUserMPINComponent = () => {
   const [reEnterMPINError, setReEnterMPINError] = useState("");
   const [createMPINError, setCreateMPINError] = useState("");
   const [isContinueDisabled, setIsContinueDisabled] = useState(true);
-  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
-  const loading = useSelector((state) => state?.auth?.loading);
-  const error = useSelector((state) => state?.auth?.error);
+  const { loading, error } = useSelector((state) => state?.user);
 
   const createInputRefs = useRef([]);
   const reEnterInputRefs = useRef([]);
@@ -58,18 +57,14 @@ const NewUserMPINComponent = () => {
 
   const handleNewMpinCreated = () => {
     const createdMpin = createMPINdigits.join("");
-    dispatch(setIsMpinCreated());
-    dispatch(setCreatedMPIN(createMPINdigits.join("")));
-    dispatch(createMpinPost(createdMpin, phoneNumber));
-    navigate("/");
-    localStorage.setItem("isLoggedIn", true);
-    localStorage.setItem("loggedUser", phoneNumber);
+    dispatch(createUserOrUpdate(mobileNumber, createdMpin, navigate));
   };
 
   return (
     <>
-      {loading && !error && <Loader />}
-      {!loading && error && <StyledErrorContainer>{error}</StyledErrorContainer>}
+      {!loading && error && (
+        <StyledErrorContainer>{error}</StyledErrorContainer>
+      )}
       {!loading && !error && (
         <StyledInputCard>
           <StyledTextContainer>{STRINGS.CREATE_MPIN}</StyledTextContainer>
@@ -103,12 +98,16 @@ const NewUserMPINComponent = () => {
           {reEnterMPINError && (
             <StyledErrorMessage>{reEnterMPINError}</StyledErrorMessage>
           )}
-          <StyledContinueButton
-            disabled={isContinueDisabled}
-            onClick={handleNewMpinCreated}
-          >
-            {STRINGS.CONTINUE}
-          </StyledContinueButton>
+          {loading ? (
+            <Loader />
+          ) : (
+            <StyledContinueButton
+              disabled={isContinueDisabled}
+              onClick={handleNewMpinCreated}
+            >
+              {STRINGS.CONTINUE}
+            </StyledContinueButton>
+          )}
         </StyledInputCard>
       )}{" "}
     </>
