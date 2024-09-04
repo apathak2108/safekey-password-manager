@@ -7,15 +7,16 @@ import NewUserMPINComponent from "../../components/newUserMpin";
 import { useSelector, useDispatch } from "react-redux";
 import { checkUserExistence } from "../../redux/actions/authActions";
 import STRINGS from "../../constants/strings";
+import { createUserOrUpdate } from "../../redux/actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 const AuthContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [mobileError, setMobileError] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [currentComponent, setCurrentComponent] = useState("phoneAuth");
   const userExists = useSelector((state) => state?.auth?.userExists);
-  console.log(userExists, "userExists");
-  console.log(currentComponent, "currentComponent");
 
   const handlePhoneNumberContinue = () => {
     if (mobileNumber.length !== 10) {
@@ -42,6 +43,7 @@ const AuthContainer = () => {
       setCurrentComponent("enterMpin");
     } else if (userExists === false) {
       setCurrentComponent("createMpin");
+      dispatch(createUserOrUpdate(mobileNumber, "", navigate));
     }
   }, [userExists]);
 
@@ -61,7 +63,7 @@ const AuthContainer = () => {
           <ExistingUserMPINComponent mobileNumber={mobileNumber} />
         )}
         {currentComponent === "createMpin" && (
-          <NewUserMPINComponent />
+          <NewUserMPINComponent mobileNumber={mobileNumber} />
         )}
       </StyledAuthLayout>
     </>

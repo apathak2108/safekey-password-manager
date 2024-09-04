@@ -4,9 +4,12 @@ import {
   CREATE_NEW_USER_SUCCESS,
   UPDATE_USER_DATA_SUCCESS,
   CREATE_NEW_USER_FAILURE,
+  USER_LOGIN_REQUEST,
+  USER_LOGIN_SUCCESS,
+  USER_LOGIN_FAILURE,
 } from "../actionTypes";
 
-export const createUserOrUpdate = (mobileNumber) => {
+export const createUserOrUpdate = (mobileNumber, mpin, navigate) => {
   return async (dispatch) => {
     dispatch({
       type: CREATE_NEW_USER_REQUEST,
@@ -23,7 +26,7 @@ export const createUserOrUpdate = (mobileNumber) => {
           isLoggedIn: false,
           mpin: null,
           loggedInTime: null,
-          userCreatedTimeFrame: db.FieldValue.serverTimeStamp(),
+          userCreatedTimeFrame: Date.now(),
           passwords: [],
         };
         await db.collection("users").add(newUser);
@@ -36,16 +39,73 @@ export const createUserOrUpdate = (mobileNumber) => {
         const updatedUser = {
           ...userDoc.data(),
           loggedInTime: null,
+          mpin: mpin || userDoc.data().mpin,
         };
         await db.collection("users").doc(userDoc.id).update(updatedUser);
         dispatch({
           type: UPDATE_USER_DATA_SUCCESS,
           payload: updatedUser,
         });
+        navigate("/", { replace: true });
       }
     } catch (err) {
       dispatch({
         type: CREATE_NEW_USER_FAILURE,
+        error: err.message,
+      });
+    }
+  };
+};
+
+export const verifyAndLoginUser = (mobileNumber, enteredMpin, navigate) => {
+  return async (dispatch) => {
+    dispatch({
+      type: USER_LOGIN_REQUEST,
+    });
+
+    try {
+      const userQuerySnapshot = await db
+        .collection("users")
+        .where("mobileNumber", "==", mobileNumber)
+        .get();
+
+      if (!userQuerySnapshot.empty) {
+        const userDoc = userQuerySnapshot.docs[0];
+        const userData = userDoc.data();
+
+        if (userData.mpin === enteredMpin) {
+          const loggedInTime = new Date();
+          const updatedUser = {
+            ...userData,
+            isLoggedIn: true,
+            loggedInTime,
+          };
+
+          await db.collection("users").doc(userDoc.id).update(updatedUser);
+
+          dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: updatedUser,
+          });
+          navigate("/", { replace: true });
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("loggedUser", mobileNumber);
+        } else {
+          dispatch({
+            type: USER_LOGIN_FAILURE,
+            error: "Invalid MPIN",
+          });
+          alert("Entered MPIN is wrong!");
+        }
+      } else {
+        dispatch({
+          type: USER_LOGIN_FAILURE,
+          error: "User not found",
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: USER_LOGIN_FAILURE,
         error: err.message,
       });
     }

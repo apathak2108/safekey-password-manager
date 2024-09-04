@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   StyledDigitInput,
   StyledInputCard,
@@ -10,29 +10,22 @@ import {
   StyledContinueButton,
   StyledErrorContainer,
   StyledErrorMessage,
+  StyledPhoneAuthLoader,
 } from "../phoneAuth/phoneAuth.styled";
 import { handleKeyDown, handleMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsMpinCorrect } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
-import {
-  setIsEditModalOpen,
-  setIsMpinModalOpen,
-} from "../../redux/actions/homeActions";
-import Loader from "../loader";
+import { verifyAndLoginUser } from "../../redux/actions/userActions";
 
-const ExistingUserMPINComponent = () => {
+const ExistingUserMPINComponent = ({ mobileNumber }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [digits, setDigits] = useState(["", "", "", ""]);
   const [mpinError, setMPINError] = useState("");
   const inputRefs = useRef([]);
-  // const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
-  // const isMpinCorrect = useSelector((state) => state?.auth?.isMpinCorrect);
-  const loading = useSelector((state) => state?.auth?.loading);
-  const error = useSelector((state) => state?.auth?.error);
+  const loading = useSelector((state) => state?.user?.loading);
+  const error = useSelector((state) => state?.user?.error);
   const mpin = digits.join("");
-  // const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   const handleInputChange = (event, index) => {
     handleMPINChange(
@@ -46,36 +39,18 @@ const ExistingUserMPINComponent = () => {
     );
   };
 
-  // const handleClearNumber = (event, index) => {
-  //   handleKeyDown(event, index, digits, inputRefs, handleInputChange);
-  // };
+  const handleClearNumber = (event, index) => {
+    handleKeyDown(event, index, digits, inputRefs, handleInputChange);
+  };
 
-  // useEffect(() => {
-  //   dispatch(setIsMpinCorrect(mpin, phoneNumber));
-  // }, [mpin.length === 4]);
-
-  // const handleIsExistingUser = () => {
-  //   if (isLoggedIn) {
-  //     dispatch(setIsEditModalOpen(true));
-  //     dispatch(setIsMpinModalOpen());
-  //   } else {
-  //     if (isMpinCorrect) {
-  //       navigate("/");
-  //       localStorage.setItem("isLoggedIn", true);
-  //       localStorage.setItem("loggedUser", phoneNumber);
-  //     } else {
-  //       alert("Entered MPIN is wrong !");
-  //     }
-  //   }
-  // };
+  const handleExistingUserContinue = () => {
+    setMPINError("");
+    dispatch(verifyAndLoginUser(mobileNumber, mpin, navigate));
+  };
 
   return (
     <>
-      {loading && <Loader />}
-      {!loading && error && (
-        <StyledErrorContainer>{error}</StyledErrorContainer>
-      )}
-      {!loading && !error && (
+      {!loading && (
         <StyledInputCard>
           <StyledTextContainer>{STRINGS.ENTER_MPIN}</StyledTextContainer>
           <StyledMPINInputContainer>
@@ -91,7 +66,9 @@ const ExistingUserMPINComponent = () => {
             ))}
           </StyledMPINInputContainer>
           {mpinError && <StyledErrorMessage>{mpinError}</StyledErrorMessage>}
-          <StyledContinueButton>{STRINGS.CONTINUE}</StyledContinueButton>
+          <StyledContinueButton onClick={handleExistingUserContinue}>
+            {loading ? <StyledPhoneAuthLoader /> : STRINGS.CONTINUE}
+          </StyledContinueButton>
         </StyledInputCard>
       )}
     </>
