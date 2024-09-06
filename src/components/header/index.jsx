@@ -11,14 +11,18 @@ import HeaderLogo from "../../assets/header/safekeyLogoWhite.png";
 import Button from "../button";
 import STRINGS from "../../constants/strings";
 import { useDispatch } from "react-redux";
+import { createUserOrUpdate } from "../../redux/actions/userActions";
+import { useNavigate } from "react-router-dom";
 
 const Header = ({ flag = true }) => {
   const dispatch = useDispatch();
-  const phoneNumber = localStorage?.getItem("loggedUser");
+  const navigate = useNavigate();
+  const mobileNumber = localStorage.getItem("loggedUser");
+
   const handleUserSignOut = () => {
-    dispatch(setIsLoggedIn());
-    localStorage.removeItem("isLoggedIn");
-    location.reload();
+    if (mobileNumber) {
+      dispatch(createUserOrUpdate(mobileNumber, null, navigate, true));
+    }
   };
 
   return (
@@ -29,7 +33,7 @@ const Header = ({ flag = true }) => {
       {flag && (
         <StyledHeaderAuthContainer>
           <StyledUserDetailsContainer>
-            <StyledUserDetails>{`Hi, ${phoneNumber}`}</StyledUserDetails>
+            <StyledUserDetails>{`Hi, ${mobileNumber}`}</StyledUserDetails>
             <Button name={STRINGS.SIGN_OUT} onClick={handleUserSignOut} />
           </StyledUserDetailsContainer>
         </StyledHeaderAuthContainer>

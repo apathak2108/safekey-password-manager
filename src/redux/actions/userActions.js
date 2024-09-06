@@ -9,7 +9,12 @@ import {
   USER_LOGIN_FAILURE,
 } from "../actionTypes";
 
-export const createUserOrUpdate = (mobileNumber, mpin, navigate) => {
+export const createUserOrUpdate = (
+  mobileNumber,
+  mpin,
+  navigate,
+  signOut = false
+) => {
   return async (dispatch) => {
     dispatch({
       type: CREATE_NEW_USER_REQUEST,
@@ -21,6 +26,7 @@ export const createUserOrUpdate = (mobileNumber, mpin, navigate) => {
         .get();
 
       if (userQuerySnapshot.empty) {
+        // If the user doesn't exist, create a new user
         const newUser = {
           mobileNumber,
           isLoggedIn: false,
@@ -35,18 +41,28 @@ export const createUserOrUpdate = (mobileNumber, mpin, navigate) => {
           payload: newUser,
         });
       } else {
+        // If the user exists, update their data
         const userDoc = userQuerySnapshot.docs[0];
         const updatedUser = {
           ...userDoc.data(),
-          loggedInTime: null,
           mpin: mpin || userDoc.data().mpin,
+          isLoggedIn: !signOut,
+          loggedInTime: signOut ? null : new Date(),
         };
         await db.collection("users").doc(userDoc.id).update(updatedUser);
         dispatch({
           type: UPDATE_USER_DATA_SUCCESS,
           payload: updatedUser,
         });
-        navigate("/", { replace: true });
+        if (signOut) {
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("loggedUser");
+          window.location.reload();
+        } else {
+          localStorage.setItem("isLoggedIn", true);
+          localStorage.setItem("loggedUser", mobileNumber);
+          window.location.href = "/";
+        }
       }
     } catch (err) {
       dispatch({
@@ -87,7 +103,8 @@ export const verifyAndLoginUser = (mobileNumber, enteredMpin, navigate) => {
             type: USER_LOGIN_SUCCESS,
             payload: updatedUser,
           });
-          navigate("/", { replace: true });
+          // navigate("/", { replace: true });
+          window.location.href = "/";
           localStorage.setItem("isLoggedIn", true);
           localStorage.setItem("loggedUser", mobileNumber);
         } else {
