@@ -11,8 +11,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomeAdaptive />} />
-        <Route path="/auth" element={<AuthAdaptive />} />
+        <Route
+          path="/"
+          element={isLoggedIn ? <HomeAdaptive /> : <Navigate to="/auth" />}
+        />
+        <Route
+          path="/auth"
+          element={!isLoggedIn ? <AuthAdaptive /> : <Navigate to="/" />}
+        />
         <Route path="*" element={<Error404Adaptive />} />
       </Routes>
     </BrowserRouter>
