@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyledDeleteButton,
   StyledEditButton,
@@ -12,37 +12,25 @@ import {
 import InputField from "../inputField";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteUserCrederential,
-  setSelectedPassword,
-  setSelectedUsername,
-  setUpdatedCredential,
-} from "../../redux/actions/homeActions";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const EditAndDeleteModal = () => {
   const dispatch = useDispatch();
-  const selectedUsername = useSelector(
-    (state) => state?.home?.selectedUsername
+  const selectedIndex = useSelector((state) => state?.password?.selectedIndex);
+  const selectedCredential = useSelector(
+    (state) => state?.password?.passwords[selectedIndex]
   );
-  const selectedPassword = useSelector(
-    (state) => state?.home?.selectedPassword
-  );
-  const selectedId = useSelector((state) => state?.home?.selectedId);
-  const deleteResponseData = useSelector(
-    (state) => state?.home?.deleteResponseData
-  );
-  const loading = useSelector((state) => state?.home?.loading);
+  const [username, setUsername] = useState(selectedCredential.username);
+  const [password, setPassword] = useState(selectedCredential.password);
+
   const handleDeleteCredential = () => {
     dispatch(deleteUserCrederential(selectedId));
   };
 
-  const handleEditCredential = () => {
-    dispatch(
-      setUpdatedCredential(selectedId, selectedUsername, selectedPassword)
-    );
-  };
+  // const handleEditCredential = () => {
+  //   dispatch(
+  //     setUpdatedCredential(selectedId, selectedUsername, selectedPassword)
+  //   );
+  // };
 
   return (
     <StyledModalLayout>
@@ -51,16 +39,16 @@ const EditAndDeleteModal = () => {
           <span>{STRINGS.PASSWORD_TITLE}</span>
           <InputField
             type={STRINGS.TEXT_INPUT_TYPE}
-            onChange={(e) => dispatch(setSelectedUsername(e.target.value))}
-            value={selectedUsername}
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
           />
         </StyledEditModalInputContainer>
         <StyledEditModalInputContainer>
           <span>{STRINGS.PASSWORD}</span>
           <InputField
             type={STRINGS.PASSWORD_INPUT_TYPE}
-            onChange={(e) => dispatch(setSelectedPassword(e.target.value))}
-            value={selectedPassword}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
         </StyledEditModalInputContainer>
         <hr style={{ width: "100%", color: "lightgray" }} />

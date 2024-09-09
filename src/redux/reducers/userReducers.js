@@ -6,6 +6,9 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
+  ADD_PASSWORD_REQUEST,
+  ADD_PASSWORD_SUCCESS,
+  ADD_PASSWORD_FAILURE,
 } from "../actionTypes";
 
 const initialState = {
@@ -19,6 +22,7 @@ const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_NEW_USER_REQUEST:
     case USER_LOGIN_REQUEST:
+    case ADD_PASSWORD_REQUEST:
       return {
         ...state,
         loading: true,
@@ -34,8 +38,19 @@ const userReducer = (state = initialState, action) => {
         isLoggedIn: true,
         error: "",
       };
+    case ADD_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: {
+          ...state.user,
+          passwords: action.payload,
+        },
+        error: "",
+      };
     case CREATE_NEW_USER_FAILURE:
     case USER_LOGIN_FAILURE:
+    case ADD_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,
