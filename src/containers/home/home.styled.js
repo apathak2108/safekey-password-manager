@@ -4,6 +4,7 @@ import { StyledLayout } from "../../components/layout/layout.styled";
 
 export const HomeLayout = styled(StyledLayout)`
   align-items: unset;
+  overflow-y: auto;
 `;
 
 export const StyledPasswordsMainContainer = styled.main`

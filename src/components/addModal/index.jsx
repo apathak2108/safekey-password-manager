@@ -11,19 +11,18 @@ import {
 } from "./addModal.styled";
 import InputField from "../inputField";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIsPasswordModalOpen,
-  setUsernameAndPassword,
-} from "../../redux/actions/homeActions";
+import { setIsPasswordModalOpen } from "../../redux/actions/homeActions";
 import STRINGS from "../../constants/strings";
 import { useNavigate } from "react-router-dom";
+import { addPassword } from "../../redux/actions/userActions";
+import { getUserPasswords } from "../../redux/actions/passwordAction";
 
 const AddPasswordModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const phoneNumber = useSelector((state) => state?.auth?.phoneNumber);
+  const mobileNumber = localStorage.getItem("loggedUser");
 
   const handleUsernameChange = (event) => {
     const value = event?.target?.value;
@@ -35,10 +34,13 @@ const AddPasswordModal = () => {
   };
 
   const handleAddPasswordOnSave = () => {
-    dispatch(setUsernameAndPassword(phoneNumber, username, password));
+    const newPassword = { username, password };
+    dispatch(addPassword(mobileNumber, newPassword));
     dispatch(setIsPasswordModalOpen());
+    dispatch(getUserPasswords());
     navigate("/");
   };
+
   return (
     <StyledModalLayout>
       <StyledAddModalContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/header";
 import {
   HomeLayout,
@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getUserAllCredentials,
   setIsEditModalOpen,
-  setIsMpinModalOpen,
   setIsPasswordModalOpen,
   setSelectedPassword,
   setSelectedUserId,
@@ -25,6 +24,11 @@ import {
 } from "../../redux/actions/homeActions";
 import ExistingUserMPINComponent from "../../components/existingUserMpin";
 import EditAndDeleteModal from "../../components/editModal";
+import {
+  getUserPasswords,
+  setSelectedPasswordIndex,
+} from "../../redux/actions/passwordAction";
+import Loader from "../../components/loader";
 
 const HomeContainer = () => {
   const dispatch = useDispatch();
@@ -33,19 +37,15 @@ const HomeContainer = () => {
   );
   const isMpinModal = useSelector((state) => state?.home?.isMpinModal);
   const isEditModal = useSelector((state) => state?.home?.isEditModal);
-  const allUsernames = useSelector(
-    (state) => state?.home?.userAllCredentials?.data
-  );
-  const phoneNumber = localStorage.getItem("loggedUser");
-  const handleCredentialActions = (id, username, password) => {
+  const { passwords, loading, error } = useSelector((state) => state?.password);
+
+  const handleCredentialActions = (index) => {
     dispatch(setIsEditModalOpen(true));
-    dispatch(setSelectedUserId(id));
-    dispatch(setSelectedUsername(username));
-    dispatch(setSelectedPassword(password));
+    dispatch(setSelectedPasswordIndex(index));
   };
 
   useEffect(() => {
-    dispatch(getUserAllCredentials(phoneNumber));
+    dispatch(getUserPasswords());
   }, []);
 
   return (
@@ -66,18 +66,14 @@ const HomeContainer = () => {
               {STRINGS.HOME_DESCRIPTION_TEXT}
             </StyledDescriptionContainer>
             <StyledPasswordCardsContainer>
-              {allUsernames?.map((credential, index) => (
+              {loading && <Loader />}
+              {error && <span>{error}</span>}
+              {passwords?.map((credential, index) => (
                 <StyledPasswordCard
                   key={index}
-                  onClick={() =>
-                    handleCredentialActions(
-                      credential?._id,
-                      credential?.originName,
-                      credential?.originPassword
-                    )
-                  }
+                  onClick={() => handleCredentialActions(index)}
                 >
-                  {credential?.originName}
+                  {credential?.username}
                   <StyledArrowIcon />
                 </StyledPasswordCard>
               ))}
