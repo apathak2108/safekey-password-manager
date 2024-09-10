@@ -10,7 +10,7 @@ import {
   StyledPasswordCard,
   StyledPasswordCardsContainer,
   StyledPasswordsMainContainer,
-} from "./home.styled";
+} from "./home.styled.js";
 import AddPasswordModal from "../../components/addModal";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";

@@ -10,7 +10,7 @@ import {
   StyledPhoneInput,
   StyledTextArticle,
   StyledTextContainer,
-} from "./phoneAuth.styled";
+} from "./phoneAuth.styled.js";
 import { useSelector } from "react-redux";
 import STRINGS from "../../constants/strings";
 import { INDIA_ICON_PATH } from "../../constants/paths";

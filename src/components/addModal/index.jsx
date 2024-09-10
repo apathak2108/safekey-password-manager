@@ -8,7 +8,7 @@ import {
   StyledHeaderText,
   StyledModalButtons,
   StyledModalLayout,
-} from "./addModal.styled";
+} from "./addModal.styled.js";
 import InputField from "../inputField";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsPasswordModalOpen } from "../../redux/actions/homeActions";

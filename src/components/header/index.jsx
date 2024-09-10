@@ -6,7 +6,7 @@ import {
   StyledHeaderLogoContainer,
   StyledUserDetails,
   StyledUserDetailsContainer,
-} from "./header.styled";
+} from "./header.styled.js";
 import HeaderLogo from "../../assets/header/safekeyLogoWhite.png";
 import Button from "../button";
 import STRINGS from "../../constants/strings";

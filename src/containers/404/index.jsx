@@ -1,5 +1,5 @@
 import React from "react";
-import { StyledErrorPageLayout } from "./404.styled";
+import { StyledErrorPageLayout } from "./404.styled.js";
 import Error404Image from "../../assets/404/error404Image.png";
 import Header from "../../components/header";
 

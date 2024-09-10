@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyledAuthLayout } from "./auth.styled";
+import { StyledAuthLayout } from "./auth.styled.js";
 import Header from "../../components/header";
 import PhoneAuthComponent from "../../components/phoneAuth";
 import ExistingUserMPINComponent from "../../components/existingUserMpin";

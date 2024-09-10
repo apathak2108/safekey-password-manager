@@ -4,14 +4,13 @@ import {
   StyledInputCard,
   StyledMPINInputContainer,
   StyledTextContainer,
-} from "./existingUserMpin.styled";
+} from "./existingUserMpin.styled.js";
 import STRINGS from "../../constants/strings";
 import {
   StyledContinueButton,
-  StyledErrorContainer,
   StyledErrorMessage,
   StyledPhoneAuthLoader,
-} from "../phoneAuth/phoneAuth.styled";
+} from "../phoneAuth/phoneAuth.styled.js";
 import { handleKeyDown, handleMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,6 @@ const ExistingUserMPINComponent = ({ mobileNumber }) => {
   const [mpinError, setMPINError] = useState("");
   const inputRefs = useRef([]);
   const loading = useSelector((state) => state?.user?.loading);
-  const error = useSelector((state) => state?.user?.error);
   const mpin = digits.join("");
 
   const handleInputChange = (event, index) => {
