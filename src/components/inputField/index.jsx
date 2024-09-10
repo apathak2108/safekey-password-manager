@@ -4,7 +4,7 @@ import {
   StyledEyeButton,
   StyledInputContainer,
   StyledInputField,
-} from "./inputField.styled";
+} from "./inputField.styled.js";
 import STRINGS from "../../constants/strings";
 
 const InputField = ({ value, type, placeholder, onChange, maxLength }) => {

@@ -3,13 +3,13 @@ import {
   StyledDeleteButton,
   StyledEditButton,
   StyledModalLayout,
-} from "../addModal/addModal.styled";
+} from "../addModal/addModal.styled.js";
 import {
   StyledBackIcon,
   StyledEditModalButtonsContainer,
   StyledEditModalContainer,
   StyledEditModalInputContainer,
-} from "./editModal.styled";
+} from "./editModal.styled.js";
 import InputField from "../inputField";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";

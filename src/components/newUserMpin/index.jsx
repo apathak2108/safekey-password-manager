@@ -4,13 +4,13 @@ import {
   StyledInputCard,
   StyledMPINInputContainer,
   StyledTextContainer,
-} from "../existingUserMpin/existingUserMpin.styled";
+} from "../existingUserMpin/existingUserMpin.styled.js";
 import STRINGS from "../../constants/strings";
 import {
   StyledContinueButton,
   StyledErrorContainer,
   StyledErrorMessage,
-} from "../phoneAuth/phoneAuth.styled";
+} from "../phoneAuth/phoneAuth.styled.js";
 import { handleCreateMPINChange, handleReEnterMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
