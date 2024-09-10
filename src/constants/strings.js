@@ -15,7 +15,7 @@ const STRINGS = {
   RE_ENTER_MPIN: "Re-enter MPIN",
   MPIN_NOT_MATCHING_ERROR_MESSAGE: "MPINs do not match !",
   MPIN_MAXLEN: "1",
-  SIGN_OUT: "Sign Out",
+  SIGN_OUT: "Sign\u00A0Out",
   PASSWORDS: "Passwords",
   ADD: "Add",
   HOME_DESCRIPTION_TEXT:

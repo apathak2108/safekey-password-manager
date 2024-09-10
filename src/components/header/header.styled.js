@@ -30,9 +30,18 @@ export const StyledHeaderAuthContainer = styled.section`
 export const StyledHeaderLogo = styled.img`
   height: 70%;
   margin-left: 24px;
+
+  @media (max-width: 768px) {
+    height: 50%;
+    margin-left: 12px;
+  }
 `;
 
 export const StyledUserDetails = styled.span`
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 export const StyledUserDetailsContainer = styled.div`
