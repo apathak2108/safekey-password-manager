@@ -15,12 +15,8 @@ import AddPasswordModal from "../../components/addModal";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getUserAllCredentials,
   setIsEditModalOpen,
   setIsPasswordModalOpen,
-  setSelectedPassword,
-  setSelectedUserId,
-  setSelectedUsername,
 } from "../../redux/actions/homeActions";
 import ExistingUserMPINComponent from "../../components/existingUserMpin";
 import EditAndDeleteModal from "../../components/editModal";
@@ -68,6 +64,7 @@ const HomeContainer = () => {
             <StyledPasswordCardsContainer>
               {loading && <Loader />}
               {error && <span>{error}</span>}
+              {passwords.length === 0 && <span>No passwords to show!</span>}
               {passwords?.map((credential, index) => (
                 <StyledPasswordCard
                   key={index}

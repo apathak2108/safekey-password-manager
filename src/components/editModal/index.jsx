@@ -5,6 +5,7 @@ import {
   StyledModalLayout,
 } from "../addModal/addModal.styled";
 import {
+  StyledBackIcon,
   StyledEditModalButtonsContainer,
   StyledEditModalContainer,
   StyledEditModalInputContainer,
@@ -12,6 +13,11 @@ import {
 import InputField from "../inputField";
 import STRINGS from "../../constants/strings";
 import { useDispatch, useSelector } from "react-redux";
+import { setIsEditModalOpen } from "../../redux/actions/homeActions";
+import {
+  deletePassword,
+  updatePasswordAtIndex,
+} from "../../redux/actions/passwordAction";
 
 const EditAndDeleteModal = () => {
   const dispatch = useDispatch();
@@ -23,14 +29,18 @@ const EditAndDeleteModal = () => {
   const [password, setPassword] = useState(selectedCredential.password);
 
   const handleDeleteCredential = () => {
-    dispatch(deleteUserCrederential(selectedId));
+    dispatch(deletePassword(selectedIndex));
+    dispatch(setIsEditModalOpen(false));
   };
 
-  // const handleEditCredential = () => {
-  //   dispatch(
-  //     setUpdatedCredential(selectedId, selectedUsername, selectedPassword)
-  //   );
-  // };
+  const handleEditCredential = () => {
+    dispatch(updatePasswordAtIndex(selectedIndex, username, password));
+    dispatch(setIsEditModalOpen(false));
+  };
+
+  const handleBackIcon = () => {
+    dispatch(setIsEditModalOpen(false));
+  };
 
   return (
     <StyledModalLayout>
@@ -60,6 +70,11 @@ const EditAndDeleteModal = () => {
             {STRINGS.DELETE}
           </StyledDeleteButton>
         </StyledEditModalButtonsContainer>
+        <StyledBackIcon
+          src="https://img.icons8.com/?size=100&id=yiR4rPf7BGje&format=png&color=000000"
+          alt="back-icon"
+          onClick={handleBackIcon}
+        />
       </StyledEditModalContainer>
     </StyledModalLayout>
   );
