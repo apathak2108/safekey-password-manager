@@ -4,7 +4,7 @@ import {
   StyledInputCard,
   StyledMPINInputContainer,
   StyledTextContainer,
-} from "./existingUserMpin.styled.js";
+} from "./existingUserMPIN.styled.js";
 import STRINGS from "../../constants/strings";
 import {
   StyledContinueButton,
