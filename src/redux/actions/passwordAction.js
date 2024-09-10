@@ -5,11 +5,13 @@ import {
   GET_USER_PASSWORDS_REQUEST,
   GET_USER_PASSWORDS_SUCCESS,
   SET_SELECTED_PASSWORD_INDEX,
-  UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_FAILURE,
   UPDATE_PASSWORD_SUCCESS,
   DELETE_PASSWORD_SUCCESS,
   DELETE_PASSWORD_FAILURE,
+  ADD_PASSWORD_REQUEST,
+  ADD_PASSWORD_SUCCESS,
+  ADD_PASSWORD_FAILURE,
 } from "../actionTypes";
 
 export const getUserPasswords = () => {
@@ -49,6 +51,47 @@ export const setSelectedPasswordIndex = (index) => ({
   type: SET_SELECTED_PASSWORD_INDEX,
   payload: index,
 });
+
+export const addPassword = (newPassword) => {
+  return async (dispatch) => {
+    dispatch({
+      type: ADD_PASSWORD_REQUEST,
+    });
+    try {
+      const mobileNumber = localStorage.getItem("loggedUser");
+      const userQuerySnapshot = await db
+        .collection("users")
+        .where("mobileNumber", "==", mobileNumber)
+        .get();
+
+      if (!userQuerySnapshot.empty) {
+        const userDoc = userQuerySnapshot.docs[0];
+        const userData = userDoc.data();
+
+        const updatedPasswords = [...userData.passwords, newPassword];
+        await db.collection("users").doc(userDoc.id).update({
+          passwords: updatedPasswords,
+        });
+        dispatch({
+          type: ADD_PASSWORD_SUCCESS,
+          payload: updatedPasswords,
+        });
+        toast.success("Password added successfully!");
+      } else {
+        dispatch({
+          type: ADD_PASSWORD_FAILURE,
+          error: "User not found",
+        });
+      }
+    } catch (err) {
+      dispatch({
+        type: ADD_PASSWORD_FAILURE,
+        error: err.message,
+      });
+      toast.error("Failed to add password!");
+    }
+  };
+};
 
 export const updatePasswordAtIndex = (
   index,

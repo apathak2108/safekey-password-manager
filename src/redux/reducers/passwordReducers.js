@@ -6,6 +6,9 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   DELETE_PASSWORD_SUCCESS,
+  ADD_PASSWORD_REQUEST,
+  ADD_PASSWORD_SUCCESS,
+  ADD_PASSWORD_FAILURE,
 } from "../actionTypes";
 
 const initialState = {
@@ -19,6 +22,7 @@ const passwordReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER_PASSWORDS_REQUEST:
     case UPDATE_PASSWORD_REQUEST:
+    case ADD_PASSWORD_REQUEST:
       return {
         ...state,
         loading: true,
@@ -31,6 +35,7 @@ const passwordReducer = (state = initialState, action) => {
         error: "",
       };
     case GET_USER_PASSWORDS_FAILURE:
+    case ADD_PASSWORD_FAILURE:
       return {
         ...state,
         loading: false,
@@ -42,6 +47,7 @@ const passwordReducer = (state = initialState, action) => {
         selectedIndex: action.payload,
       };
     case UPDATE_PASSWORD_SUCCESS:
+    case ADD_PASSWORD_SUCCESS:
       return {
         ...state,
         loading: false,

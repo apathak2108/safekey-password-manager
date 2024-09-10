@@ -14,8 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsPasswordModalOpen } from "../../redux/actions/homeActions";
 import STRINGS from "../../constants/strings";
 import { useNavigate } from "react-router-dom";
-import { addPassword } from "../../redux/actions/userActions";
-import { getUserPasswords } from "../../redux/actions/passwordAction";
+import {
+  addPassword,
+  getUserPasswords,
+} from "../../redux/actions/passwordAction";
 
 const AddPasswordModal = () => {
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const AddPasswordModal = () => {
 
   const handleAddPasswordOnSave = () => {
     const newPassword = { username, password };
-    dispatch(addPassword(mobileNumber, newPassword));
+    dispatch(addPassword(newPassword));
     dispatch(setIsPasswordModalOpen());
     dispatch(getUserPasswords());
     navigate("/");
