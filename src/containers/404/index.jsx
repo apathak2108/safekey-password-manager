@@ -8,7 +8,6 @@ const Error404Container = () => {
     <StyledErrorPageLayout>
       <Header flag={false} />
       <img src={Error404Image} />
-      
     </StyledErrorPageLayout>
   );
 };

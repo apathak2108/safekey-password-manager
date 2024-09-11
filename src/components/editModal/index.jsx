@@ -9,6 +9,7 @@ import {
   StyledEditModalButtonsContainer,
   StyledEditModalContainer,
   StyledEditModalInputContainer,
+  StyledRow,
 } from "./editModal.styled.js";
 import InputField from "../inputField";
 import STRINGS from "../../constants/strings";
@@ -18,6 +19,7 @@ import {
   deletePassword,
   updatePasswordAtIndex,
 } from "../../redux/actions/passwordAction";
+import { BACK_ICON_PATH } from "../../constants/paths.js";
 
 const EditAndDeleteModal = () => {
   const dispatch = useDispatch();
@@ -61,7 +63,7 @@ const EditAndDeleteModal = () => {
             value={password}
           />
         </StyledEditModalInputContainer>
-        <hr style={{ width: "100%", color: "lightgray" }} />
+        <StyledRow />
         <StyledEditModalButtonsContainer>
           <StyledEditButton onClick={handleEditCredential}>
             {STRINGS.EDIT}
@@ -71,8 +73,8 @@ const EditAndDeleteModal = () => {
           </StyledDeleteButton>
         </StyledEditModalButtonsContainer>
         <StyledBackIcon
-          src="https://img.icons8.com/?size=100&id=yiR4rPf7BGje&format=png&color=000000"
-          alt="back-icon"
+          src={BACK_ICON_PATH}
+          alt={STRINGS.BACK_ICON}
           onClick={handleBackIcon}
         />
       </StyledEditModalContainer>

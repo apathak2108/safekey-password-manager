@@ -27,3 +27,8 @@ export const StyledBackIcon = styled.img`
   position: absolute;
   cursor: pointer;
 `;
+
+export const StyledRow = styled.hr`
+  width: 100%;
+  color: lightgray;
+`;

@@ -15,15 +15,16 @@ import { handleKeyDown, handleMPINChange } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { verifyAndLoginUser } from "../../redux/actions/userActions";
+import { DIGITS_EMPTY_ARRAY } from "../../constants/paths.js";
 
 const ExistingUserMPINComponent = ({ mobileNumber }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [digits, setDigits] = useState(["", "", "", ""]);
-  const [mpinError, setMPINError] = useState("");
+  const [digits, setDigits] = useState(DIGITS_EMPTY_ARRAY);
+  const [mpinError, setMPINError] = useState(STRINGS.EMPTY_STRING);
   const inputRefs = useRef([]);
   const loading = useSelector((state) => state?.user?.loading);
-  const mpin = digits.join("");
+  const mpin = digits.join(STRINGS.EMPTY_STRING);
 
   const handleInputChange = (event, index) => {
     handleMPINChange(
@@ -42,7 +43,7 @@ const ExistingUserMPINComponent = ({ mobileNumber }) => {
   };
 
   const handleExistingUserContinue = () => {
-    setMPINError("");
+    setMPINError(STRINGS.EMPTY_STRING);
     dispatch(verifyAndLoginUser(mobileNumber, mpin, navigate));
   };
 

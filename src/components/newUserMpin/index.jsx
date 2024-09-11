@@ -16,14 +16,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../loader";
 import { createUserOrUpdate } from "../../redux/actions/userActions";
+import { DIGITS_EMPTY_ARRAY } from "../../constants/paths.js";
 
 const NewUserMPINComponent = ({ mobileNumber }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [createMPINdigits, setCreateMPINDigits] = useState(["", "", "", ""]);
-  const [reEnterMPINdigits, setReEnterMPINDigits] = useState(["", "", "", ""]);
-  const [reEnterMPINError, setReEnterMPINError] = useState("");
-  const [createMPINError, setCreateMPINError] = useState("");
+  const [createMPINdigits, setCreateMPINDigits] = useState(DIGITS_EMPTY_ARRAY);
+  const [reEnterMPINdigits, setReEnterMPINDigits] = useState(DIGITS_EMPTY_ARRAY);
+  const [reEnterMPINError, setReEnterMPINError] = useState(STRINGS.EMPTY_STRING);
+  const [createMPINError, setCreateMPINError] = useState(STRINGS.EMPTY_STRING);
   const [isContinueDisabled, setIsContinueDisabled] = useState(true);
   const { loading, error } = useSelector((state) => state?.user);
 
@@ -56,7 +57,7 @@ const NewUserMPINComponent = ({ mobileNumber }) => {
   };
 
   const handleNewMpinCreated = () => {
-    const createdMpin = createMPINdigits.join("");
+    const createdMpin = createMPINdigits.join(STRINGS.EMPTY_STRING);
     dispatch(createUserOrUpdate(mobileNumber, createdMpin, navigate));
   };
 

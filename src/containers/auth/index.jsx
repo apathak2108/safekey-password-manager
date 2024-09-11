@@ -13,9 +13,11 @@ import { useNavigate } from "react-router-dom";
 const AuthContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [mobileError, setMobileError] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [currentComponent, setCurrentComponent] = useState("phoneAuth");
+  const [mobileError, setMobileError] = useState(STRINGS.EMPTY_STRING);
+  const [mobileNumber, setMobileNumber] = useState(STRINGS.EMPTY_STRING);
+  const [currentComponent, setCurrentComponent] = useState(
+    STRINGS.PHONE_AUTH_STATE
+  );
   const userExists = useSelector((state) => state?.auth?.userExists);
 
   const handlePhoneNumberContinue = () => {
@@ -31,7 +33,7 @@ const AuthContainer = () => {
     if (/^\d*$/.test(enteredNumber)) {
       if (enteredNumber.length <= 10) {
         setMobileNumber(enteredNumber);
-        setMobileError("");
+        setMobileError(STRINGS.EMPTY_STRING);
       } else {
         setMobileError(STRINGS.MAXLEN_ERROR_MESSAGE);
       }
@@ -40,10 +42,12 @@ const AuthContainer = () => {
 
   useEffect(() => {
     if (userExists === true) {
-      setCurrentComponent("enterMpin");
+      setCurrentComponent(STRINGS.ENTER_MPIN_STATE);
     } else if (userExists === false) {
-      setCurrentComponent("createMpin");
-      dispatch(createUserOrUpdate(mobileNumber, "", navigate));
+      setCurrentComponent(STRINGS.CREATE_MPIN_STATE);
+      dispatch(
+        createUserOrUpdate(mobileNumber, STRINGS.EMPTY_STRING, navigate)
+      );
     }
   }, [userExists]);
 
@@ -51,7 +55,7 @@ const AuthContainer = () => {
     <>
       <Header flag={false} />
       <StyledAuthLayout>
-        {currentComponent === "phoneAuth" && (
+        {currentComponent === STRINGS.PHONE_AUTH_STATE && (
           <PhoneAuthComponent
             mobileNumber={mobileNumber}
             onChange={handleMobileInputChange}
@@ -59,10 +63,10 @@ const AuthContainer = () => {
             err={mobileError}
           />
         )}
-        {currentComponent === "enterMpin" && (
+        {currentComponent === STRINGS.ENTER_MPIN_STATE && (
           <ExistingUserMPINComponent mobileNumber={mobileNumber} />
         )}
-        {currentComponent === "createMpin" && (
+        {currentComponent === STRINGS.CREATE_MPIN_STATE && (
           <NewUserMPINComponent mobileNumber={mobileNumber} />
         )}
       </StyledAuthLayout>

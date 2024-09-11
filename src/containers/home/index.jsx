@@ -64,7 +64,9 @@ const HomeContainer = () => {
             <StyledPasswordCardsContainer>
               {loading && <Loader />}
               {error && <span>{error}</span>}
-              {passwords.length === 0 && <span>No passwords to show!</span>}
+              {!loading && passwords.length === 0 && (
+                <span>{STRINGS.NO_PASSWORDS}</span>
+              )}
               {passwords?.map((credential, index) => (
                 <StyledPasswordCard
                   key={index}

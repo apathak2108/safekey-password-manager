@@ -8,9 +8,6 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
-  ADD_PASSWORD_REQUEST,
-  ADD_PASSWORD_SUCCESS,
-  ADD_PASSWORD_FAILURE,
 } from "../actionTypes";
 
 export const createUserOrUpdate = (
@@ -127,46 +124,6 @@ export const verifyAndLoginUser = (mobileNumber, enteredMpin, navigate) => {
         type: USER_LOGIN_FAILURE,
         error: err.message,
       });
-    }
-  };
-};
-
-export const addPassword = (mobileNumber, newPassword) => {
-  return async (dispatch) => {
-    dispatch({
-      type: ADD_PASSWORD_REQUEST,
-    });
-    try {
-      const userQuerySnapshot = await db
-        .collection("users")
-        .where("mobileNumber", "==", mobileNumber)
-        .get();
-
-      if (!userQuerySnapshot.empty) {
-        const userDoc = userQuerySnapshot.docs[0];
-        const userData = userDoc.data();
-
-        const updatedPasswords = [...userData.passwords, newPassword];
-        await db.collection("users").doc(userDoc.id).update({
-          passwords: updatedPasswords,
-        });
-        dispatch({
-          type: ADD_PASSWORD_SUCCESS,
-          payload: updatedPasswords,
-        });
-        toast.success("Password added successfully!");
-      } else {
-        dispatch({
-          type: ADD_PASSWORD_FAILURE,
-          error: "User not found",
-        });
-      }
-    } catch (err) {
-      dispatch({
-        type: ADD_PASSWORD_FAILURE,
-        error: err.message,
-      });
-      toast.error("Failed to add password!");
     }
   };
 };
