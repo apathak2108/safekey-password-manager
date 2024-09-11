@@ -10,7 +10,7 @@ import {
   StyledModalLayout,
 } from "./addModal.styled.js";
 import InputField from "../inputField";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setIsPasswordModalOpen } from "../../redux/actions/homeActions";
 import STRINGS from "../../constants/strings";
 import { useNavigate } from "react-router-dom";
@@ -18,13 +18,13 @@ import {
   addPassword,
   getUserPasswords,
 } from "../../redux/actions/passwordAction";
+import { ROUTES } from "../../constants/paths.js";
 
 const AddPasswordModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const mobileNumber = localStorage.getItem("loggedUser");
+  const [username, setUsername] = useState(STRINGS.EMPTY_STRING);
+  const [password, setPassword] = useState(STRINGS.EMPTY_STRING);
 
   const handleUsernameChange = (event) => {
     const value = event?.target?.value;
@@ -40,7 +40,7 @@ const AddPasswordModal = () => {
     dispatch(addPassword(newPassword));
     dispatch(setIsPasswordModalOpen());
     dispatch(getUserPasswords());
-    navigate("/");
+    navigate(ROUTES.HOME);
   };
 
   return (

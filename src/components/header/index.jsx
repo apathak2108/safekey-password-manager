@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const Header = ({ flag = true }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const mobileNumber = localStorage.getItem("loggedUser");
+  const mobileNumber = localStorage.getItem(STRINGS.LOGGED_USER);
 
   const handleUserSignOut = () => {
     if (mobileNumber) {

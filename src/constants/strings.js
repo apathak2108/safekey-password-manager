@@ -29,6 +29,13 @@ const STRINGS = {
   SAVE: "Save",
   DELETE: "Delete",
   EDIT: "Edit",
+  EMPTY_STRING: "",
+  LOGGED_USER: "loggedUser",
+  BACK_ICON: "back-icon",
+  ENTER_MPIN_STATE: "enterMpin",
+  PHONE_AUTH_STATE: "phoneAuth",
+  CREATE_MPIN_STATE: "createMpin",
+  NO_PASSWORDS: "No passwords to show!",
 };
 
 export default STRINGS;
